@@ -1,1 +1,22 @@
-const C='portal-v2';self.addEventListener('install',e=>e.waitUntil(caches.open(C).then(c=>c.addAll(['./','./index.html','./manifest.webmanifest','./icon.svg']))));self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));self.addEventListener('fetch',e=>{if(e.request.method!=='GET'||new URL(e.request.url).origin!==self.location.origin)return;e.respondWith(fetch(e.request).then(r=>{const copy=r.clone();caches.open(C).then(c=>c.put(e.request,copy));return r}).catch(()=>caches.match(e.request)))})
+const CACHE='portal-v3';
+const ASSETS=['./','./index.html','./manifest.webmanifest','./icon.svg'];
+self.addEventListener('install',event=>{
+  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
+});
+self.addEventListener('activate',event=>{
+  event.waitUntil(Promise.all([
+    caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('portal-')&&k!==CACHE).map(k=>caches.delete(k)))),
+    self.clients.claim()
+  ]));
+});
+self.addEventListener('fetch',event=>{
+  const request=event.request;
+  if(request.method!=='GET'||new URL(request.url).origin!==self.location.origin)return;
+  event.respondWith(fetch(request).then(response=>{
+    if(response.ok){
+      const copy=response.clone();
+      event.waitUntil(caches.open(CACHE).then(cache=>cache.put(request,copy)));
+    }
+    return response;
+  }).catch(async()=>await caches.match(request)||Response.error()));
+});
