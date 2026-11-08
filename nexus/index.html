@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#09111f"><title>NEXUS | Inteligência Operacional</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,Segoe UI,sans-serif;color:#eef4ff;background:#09111f}*{box-sizing:border-box}body{margin:0;overflow:hidden}button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}.app{height:100dvh;display:grid;grid-template-columns:260px minmax(0,1fr)}.side,.detail{background:#0e1829;border-color:#24344a;overflow:auto}.side{border-right:1px solid #24344a;padding:22px 16px}.detail{display:none}.brand{display:flex;gap:11px;align-items:center;margin:2px 0 24px}.logo{width:38px;height:38px;border:1px solid #5f93f2;border-radius:12px;display:grid;place-items:center;background:#192e53;color:#a8c9ff;font-size:23px}.brand b{letter-spacing:2.7px;font-size:19px}.brand small{display:block;color:#7892b2;font-size:10px;letter-spacing:1.4px}.eyebrow{color:#7188a7;font-size:10px;font-weight:700;letter-spacing:2px;margin:22px 10px 10px}.navitem{width:100%;text-align:left;border:0;background:transparent;color:#a6bbd4;padding:12px 13px;border-radius:10px;display:flex;gap:12px;align-items:center;font-size:13px}.navitem:hover,.navitem.active{background:#1b2e49;color:#fff}.navitem span{margin-left:auto;color:#8095ad;font-size:11px}.navitem i{font-style:normal;font-size:16px}.muted{color:#8297b3}.hint{line-height:1.6;font-size:12px;color:#8598b3}.footer{border-top:1px solid #263750;margin-top:22px;padding:20px 10px;color:#7188a7;font-size:11px}.workspace{min-width:0;position:relative;background:radial-gradient(ellipse at 50% 42%,#142542 0%,#09111f 66%)}.workspace:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(#7189ab50 0.7px,transparent .7px);background-size:24px 24px;opacity:.45}.toolbar{position:absolute;top:18px;left:22px;right:22px;z-index:3;display:flex;gap:10px;align-items:center;flex-wrap:wrap}.top-title{flex:1;min-width:150px}.top-title h1{font-size:19px;margin:0 0 3px}.top-title p{font-size:11px;color:#839ab5;margin:0}.search{background:#121f33;border:1px solid #2b415e;color:#eaf1fa;padding:11px 13px;border-radius:10px;outline:none;width:min(220px,35vw)}.btn{border:1px solid #304766;background:#16263e;color:#dce9fb;border-radius:10px;padding:10px 12px;font-size:12px}.btn:hover{border-color:#739fff;background:#213754}.btn.primary{background:#3262bd;border-color:#5185e3;color:#fff}.btn.danger{border-color:#82414d;color:#ffb5be}.map{width:100%;height:100%;touch-action:none;cursor:grab}.map.dragging{cursor:grabbing}.map text{user-select:none;pointer-events:none}.map .node{cursor:pointer}.map .node:focus{outline:none}.map .node:focus-visible .halo{opacity:.45;stroke:#fff;stroke-width:3}.map .node:focus-visible circle:nth-child(2){stroke-width:4}.map .node:hover .halo{opacity:.22}.map .node .halo{opacity:.1}.bottom{position:absolute;bottom:18px;left:20px;right:20px;display:flex;align-items:center;justify-content:space-between;pointer-events:none}.bottom>*{pointer-events:auto}.zoom{display:flex;gap:6px}.pill{background:#101e32dc;border:1px solid #2b405b;padding:10px 13px;border-radius:10px;color:#8ba3c3;font-size:11px}.detail h2{font-size:21px;margin:12px 0 8px}.detail .category{font-size:11px;letter-spacing:1.5px;font-weight:700;color:#78a9ff}.detail .desc{font-size:13px;color:#a1b5cc;line-height:1.7}.detail h3{font-size:12px;letter-spacing:1.4px;color:#8299b9;margin-top:24px}.detail .item{background:#15243a;border:1px solid #263d59;border-radius:10px;padding:12px;margin:8px 0;font-size:13px}.detail .item small{display:block;color:#7b92ad;margin-top:5px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.dot{display:inline-block;width:9px;height:9px;border-radius:100%;margin-right:7px}.links{display:flex;flex-wrap:wrap;gap:7px}.linkbtn{background:#1a304f;border:1px solid #2e4c73;padding:8px 11px;color:#cde2ff;border-radius:9px;font-size:12px}.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:20px 0}.stat{background:#14243b;border:1px solid #293e59;border-radius:12px;padding:13px}.stat b{display:block;font-size:23px}.stat small{color:#89a1bf;font-size:11px}.modalback{position:fixed;inset:0;background:#030812ca;display:none;align-items:center;justify-content:center;z-index:15;padding:15px}.modalback.show{display:flex}.modal{width:min(540px,100%);max-height:90vh;overflow:auto;background:#101d30;border:1px solid #385273;border-radius:18px;padding:22px;box-shadow:0 30px 100px #0009}.modal h2{margin:0 0 14px}.field{display:block;margin:13px 0;color:#92a9c7;font-size:12px}.field input,.field textarea,.field select{display:block;width:100%;background:#0c1625;border:1px solid #344c6a;border-radius:9px;color:#fff;margin-top:6px;padding:11px}.field textarea{min-height:95px;resize:vertical}.formbuttons{display:flex;gap:9px;justify-content:flex-end;margin-top:20px}.notice{font-size:11px;color:#7e96b5;line-height:1.5}.mobile-toggle{display:none}.hidden{display:none!important}
+@media(max-width:1100px){.app{grid-template-columns:205px minmax(0,1fr)}.side{padding:17px 9px}.detail{padding:16px}.search{width:160px}}
+@media(max-width:760px){.app{display:block}.side{display:none;position:fixed;z-index:8;top:0;bottom:0;left:0;width:245px;box-shadow:0 0 30px #0008}.side.open{display:block}.detail{display:none}.detail.collapsed{display:none}.workspace{height:100dvh}.mobile-toggle{display:inline-block}.toolbar{top:11px;left:12px;right:12px}.top-title h1{font-size:15px}.top-title p{display:none}.search{width:135px;padding:9px}.btn{padding:9px}.bottom{bottom:12px}.pill{max-width:55%;line-height:1.4}}
+ .breadcrumbs{position:absolute;top:80px;left:22px;right:22px;z-index:4;display:flex;gap:7px;align-items:center;flex-wrap:wrap}.crumb{border:1px solid #2b4161;background:#14243b;color:#a8c8ee;border-radius:8px;padding:8px 11px;font-size:12px}.crumb:last-child{color:#fff;border-color:#5a80bd}.centerpanel{position:absolute;z-index:3;top:125px;left:50%;transform:translateX(-50%);width:min(720px,calc(100% - 40px));max-height:calc(100% - 200px);overflow:auto;background:#101e32f5;border:1px solid #355071;border-radius:18px;padding:24px;box-shadow:0 30px 90px #0009}.centerpanel h2{font-size:25px;margin:4px 0 8px}.centerpanel .desc{color:#a5bbd6;line-height:1.65}.centerpanel .item{background:#192b43;border:1px solid #304968;border-radius:11px;margin:10px 0;padding:13px;line-height:1.6}.centerpanel .category{font-size:11px;letter-spacing:1px;font-weight:700}.centerpanel .actions{display:flex;gap:8px;flex-wrap:wrap}.centerpanel h3{font-size:12px;color:#96aecf;letter-spacing:1.2px;margin-top:22px}.centerpanel[hidden]{display:none}.map.is-leaf{opacity:.19;pointer-events:none}.guide{position:absolute;top:120px;left:50%;transform:translateX(-50%);z-index:2;color:#7795b9;font-size:12px;white-space:nowrap;pointer-events:none}@media(max-width:760px){.breadcrumbs{top:64px;left:12px;right:12px}.centerpanel{top:112px;max-height:calc(100% - 170px);padding:16px}.guide{top:105px;font-size:10px}} .nucleus-tools{position:absolute;top:120px;right:24px;display:flex;gap:7px;z-index:4;flex-wrap:wrap;justify-content:flex-end;max-width:56%}.nucleus-tools .btn{backdrop-filter:blur(9px)}.search-results{position:absolute;z-index:9;right:151px;top:65px;width:min(380px,65vw);max-height:340px;overflow:auto;background:#14243b;border:1px solid #46628a;border-radius:12px;box-shadow:0 20px 50px #0008}.search-results[hidden]{display:none}.search-result{padding:12px 14px;cursor:pointer;border-bottom:1px solid #263c58;color:#e7f0ff;font-size:13px}.search-result:hover{background:#203857}.search-result small{display:block;color:#90a9c9;margin-top:4px}.nucleus-summary{position:absolute;bottom:70px;left:50%;transform:translateX(-50%);z-index:2;text-align:center;max-width:520px;background:#0c1729d9;border:1px solid #304a6b;border-radius:13px;padding:11px 18px}.nucleus-summary strong{display:block;font-size:14px}.nucleus-summary small{display:block;color:#8da8c9;margin-top:5px;line-height:1.4}.nucleus-summary[hidden]{display:none}.node-actions{display:flex;justify-content:flex-end;gap:7px;margin-top:12px}.node-actions .btn{font-size:11px}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:30;background:#203856;border:1px solid #6281ab;color:#fff;padding:12px 20px;border-radius:12px;box-shadow:0 15px 50px #0009;font-size:13px}.toast[hidden]{display:none}@media(max-width:760px){.nucleus-tools{top:105px;right:12px;max-width:95%;}.nucleus-tools .btn{font-size:10px}.search-results{top:55px;right:10px;width:min(350px,90vw)}.nucleus-summary{bottom:75px;max-width:75%;}.centerpanel{max-height:calc(100% - 180px)}} 
+.po-board{position:absolute;top:202px;bottom:20px;left:24px;right:24px;z-index:2;overflow-y:auto;padding:0 4px 28px;scrollbar-color:#375477 transparent}
+.po-board[hidden]{display:none}.po-board:focus{outline:none}.po-board:focus-visible{outline:2px solid #7eaaff;outline-offset:-2px}
+.po-head{margin-bottom:20px}.po-eyebrow{font-size:11px;color:#cfabeb;letter-spacing:1.8px;font-weight:700;margin-bottom:7px}
+.po-head h2{font-size:clamp(24px,3vw,34px);margin:0 0 7px;line-height:1.2}.po-head p{font-size:13px;color:#98acc8;line-height:1.6;margin:0;max-width:680px}
+.po-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:stretch}
+.po-card{background:linear-gradient(145deg,#192a44,#101d31);border:1px solid #38506d;border-radius:17px;padding:20px;min-width:0;box-shadow:0 16px 40px #0003}
+.po-card:nth-child(4n+1){border-top:3px solid #7eaaff}.po-card:nth-child(4n+2){border-top:3px solid #e4af77}.po-card:nth-child(4n+3){border-top:3px solid #ba96e8}.po-card:nth-child(4n){border-top:3px solid #48c8bb}
+.po-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:12px}.po-card-index{font-size:11px;font-weight:800;letter-spacing:1.2px;color:#91aad0}
+.po-card h3{margin:0 0 10px;font-size:19px;color:#f4f7ff;line-height:1.35}.po-card-desc{color:#9fb3ce;font-size:12px;line-height:1.6;min-height:30px;margin:0 0 16px}
+.po-rule{display:flex;gap:10px;align-items:flex-start;margin:9px 0;padding:11px 12px;border-radius:9px;background:#0c192c;border:1px solid #263b57;color:#e1ebfa;font-size:12px;line-height:1.55;overflow-wrap:anywhere}.po-rule-mark{color:#8baeff;font-weight:800;flex:none}
+.po-card-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}.po-note{border:1px solid #435273;border-radius:11px;padding:13px 16px;color:#a9b9d2;background:#15253b;font-size:12px;line-height:1.6;margin-top:17px}
+@media(max-width:760px){.po-board{top:205px;left:12px;right:12px;bottom:8px}.po-cards{grid-template-columns:1fr;gap:12px}.po-card{padding:16px}.po-head h2{font-size:25px}.po-head p{font-size:12px}.nucleus-tools{max-width:100%;left:12px;right:12px;top:132px;justify-content:flex-start}.workspace.po-mode .guide{display:none}}
+.workspace.po-mode #map{display:none!important}
+.workspace.po-mode .bottom{display:none!important}
+.po-board{z-index:5}
+.po-head{margin-bottom:14px}
+.po-head h2{font-size:clamp(22px,2.4vw,30px)}
+.po-cards{grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:12px;align-items:start}
+.po-card{padding:0;min-height:108px;box-shadow:0 8px 22px #0003;overflow:hidden}
+.po-card details{width:100%}
+.po-card summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:104px;padding:16px}
+.po-card summary::-webkit-details-marker{display:none}
+.po-card summary:focus-visible{outline:2px solid #8eb7ff;outline-offset:-3px}
+.po-card summary:hover{background:#223752}
+.po-card .po-card-index{display:block;font-size:10px;letter-spacing:.7px;margin-bottom:9px}
+.po-card .po-card-title{display:block;font-size:14px;font-weight:750;color:#f4f7ff;line-height:1.35;overflow-wrap:anywhere}
+.po-card .po-expand{flex:none;color:#a9c7f5;font-size:12px}
+.po-card[open],.po-card.po-expanded{grid-column:1/-1}
+.po-card.po-expanded summary{min-height:64px;border-bottom:1px solid #344a68}
+.po-card.po-expanded .po-expand{transform:rotate(180deg)}
+.po-card-content{padding:16px 18px 18px}
+.po-card-content .po-card-desc{min-height:0;margin:0 0 12px;font-size:13px}
+.po-card-content .po-rule{margin:7px 0;padding:10px 12px}
+.po-card-content .po-card-actions{margin-top:14px}
+@media(max-width:760px){.po-board{top:205px}.po-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.po-card summary{padding:11px;min-height:98px}.po-card .po-card-title{font-size:12px}.po-card-content{padding:12px}.po-head{margin-bottom:12px}.po-head p{font-size:11px}}
+@media(max-width:360px){.po-cards{grid-template-columns:1fr}}
+.workspace.rooms-mode #map,.workspace.rooms-mode .bottom{display:none!important}
+.rooms-board{position:absolute;z-index:5;top:205px;bottom:16px;left:24px;right:24px;overflow-y:auto;padding:0 4px 25px}
+.rooms-board[hidden]{display:none}
+.rooms-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.rooms-head h2{font-size:26px;margin:0 0 7px}.rooms-head p{font-size:13px;color:#9db6d5;margin:0}
+.rooms-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,245px),1fr));gap:12px}
+.room-card{background:linear-gradient(145deg,#192f4b,#101d30);border:1px solid #3b5373;border-top:3px solid #73a8ff;border-radius:15px;padding:17px}
+.room-card h3{font-size:17px;margin:0 0 9px}.room-card p{font-size:12px;color:#a9bbd3;line-height:1.5}
+.room-count,.room-role{color:#96b5d9;font-size:12px;display:block;margin:10px 0}
+.room-actions{display:flex;gap:7px;flex-wrap:wrap}
+.room-form{display:grid;grid-template-columns:minmax(120px,2fr) minmax(110px,1fr) auto;gap:10px;align-items:end;background:#162840;border:1px solid #395678;border-radius:12px;padding:16px;margin-bottom:16px}
+.room-form label{font-size:12px;color:#9fbbdc;display:grid;gap:7px}
+.room-form input,.room-form select{width:100%;min-width:0;background:#0b1729;border:1px solid #395575;border-radius:9px;padding:11px;color:#fff}
+.room-form .btn{height:42px}.room-empty{padding:20px;border:1px dashed #45648b;border-radius:12px;color:#aac4e4}
+@media(max-width:760px){.rooms-board{top:205px;left:12px;right:12px}.rooms-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.room-card{padding:12px}.room-form{grid-template-columns:1fr}.room-form .btn{width:100%}}
+@media(max-width:420px){.rooms-grid{grid-template-columns:1fr}}
+.workspace.analytics-mode #map,.workspace.analytics-mode .bottom{display:none!important}
+.analytics-board{position:absolute;z-index:5;top:205px;left:20px;right:20px;bottom:12px;overflow-y:auto;padding:0 3px 24px}
+.analytics-board[hidden]{display:none}.an-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.an-head h2{font-size:25px;margin:0 0 5px}.an-sub,.an-caption{font-size:12px;color:#96afd0;line-height:1.5}
+.an-filters{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.an-filters label{font-size:12px;color:#9cb5d5;display:grid;gap:5px}
+.an-filters select,.an-filters input{background:#0d1c31;color:#eef5ff;border:1px solid #39597f;border-radius:8px;padding:9px;max-width:225px}
+.an-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}
+.an-kpi,.an-panel{background:linear-gradient(155deg,#1a2d49,#102036);border:1px solid #36516f;border-radius:14px;padding:15px}
+.an-kpi small{font-size:11px;color:#95b1d5}.an-kpi strong{display:block;font-size:clamp(16px,2.3vw,25px);margin-top:8px;overflow-wrap:anywhere}
+.an-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:12px;margin-top:12px}
+.an-panel h3{font-size:16px;margin:0 0 14px}
+.an-chart{height:170px;display:flex;gap:5px;align-items:flex-end;padding:7px 0 0}
+.an-bar-wrap{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px}
+.an-bar{width:100%;max-width:32px;min-height:2px;background:linear-gradient(#75aefa,#315fb8);border-radius:4px 4px 0 0}.an-bar-wrap small{color:#8fa8c8;font-size:9px}
+.an-table-wrap{overflow:auto;max-height:430px}.an-table{width:100%;border-collapse:collapse;font-size:12px;min-width:640px}.an-table th,.an-table td{padding:10px;border-bottom:1px solid #304763;text-align:right;white-space:nowrap}.an-table th:first-child,.an-table td:first-child{text-align:left;position:sticky;left:0;background:#14243b}.an-table th{color:#92b3dc}
+.an-panel-wide{margin-top:12px}
+.an-cost-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.an-cost-grid label{display:grid;gap:5px;font-size:12px;color:#a4bad8}.an-cost-grid input{width:100%;min-width:0;background:#0b192c;color:white;border:1px solid #405c7e;border-radius:9px;padding:10px}
+.an-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.an-notice{font-size:12px;line-height:1.5;color:#acc6e6;border-left:3px solid #739fe0;padding:8px 10px;background:#132842;margin-top:12px}
+@media(max-width:900px){.an-layout{grid-template-columns:1fr}.an-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.analytics-board{top:205px;left:10px;right:10px}.an-cost-grid{grid-template-columns:1fr 1fr}.an-kpi{padding:11px}.an-head h2{font-size:21px}}
+.zoom .pill{display:grid;place-items:center;min-width:61px;color:#c3dafc;font-variant-numeric:tabular-nums}.zoom .btn{min-height:39px}.map .node text{font-family:Inter,ui-sans-serif,system-ui,sans-serif}@media(max-width:760px){.zoom .pill{min-width:46px;padding:8px}.zoom{gap:4px}.zoom .btn{font-size:11px}} </style></head><body>
+<div class="app"><aside class="side" id="sidebar"><div class="brand"><div class="logo">✧</div><div><b>NEXUS</b><small>OPERATIONAL INTELLIGENCE</small></div></div><p class="eyebrow">EXPLORAR</p><div id="filters"></div><p class="eyebrow">GESTÃO</p><button class="navitem" id="addNodeMenu">⊕ &nbsp; Adicionar elemento</button><button class="navitem" id="connectMenu">⤴ &nbsp; Criar conexão</button><button class="navitem" id="exportMenu">⇩ &nbsp; Exportar backup</button><button class="navitem" id="importMenu">⇧ &nbsp; Importar backup</button><input id="importFile" type="file" accept=".json,application/json" hidden><div class="footer">NEXUS • Central de comando<br>Dados deste dispositivo • v1.0<br><br>Para sincronização entre dispositivos, será necessário conectar um banco de dados e autenticação.</div></aside>
+<main class="workspace"><div class="toolbar"><button class="btn mobile-toggle" id="menuBtn" aria-label="Abrir menu de navegação">☰</button><div class="top-title"><h1 id="pageTitle">Mapa da Operação</h1><p>Explore relações, equipes, processos e decisões</p></div><input id="search" class="search" aria-label="Buscar núcleos, pessoas e processos" placeholder="⌕ Buscar em tudo..." autocomplete="off"><div id="searchResults" class="search-results" hidden></div><button class="btn primary" id="addNodeTop">+ Novo subnúcleo</button></div><div id="breadcrumbs" class="breadcrumbs"></div><div id="nucleusTools" class="nucleus-tools"></div><div id="nucleusSummary" class="nucleus-summary" hidden></div><div id="guide" class="guide">Clique em uma bolinha para entrar</div><section id="centerPanel" class="centerpanel" hidden></section><section id="poBoard" class="po-board" hidden tabindex="-1" aria-label="Regras do P.O"></section><section id="roomsBoard" class="rooms-board" hidden aria-label="Salas e equipes"></section><section id="analyticsBoard" class="analytics-board" hidden aria-label="Dashboard de desempenho e custos"></section><svg id="map" class="map" aria-label="Mapa interativo da operação"><g id="viewport"><g id="edges"></g><g id="nodes"></g></g></svg><div class="bottom"><div class="pill" id="mapInfo">Arraste o mapa • Clique para explorar</div><div class="zoom"><button class="btn" id="minus" aria-label="Diminuir zoom">−</button><button class="btn" id="reset" title="Ajustar mapa à tela">Ajustar mapa</button><span class="pill" id="zoomLevel" aria-live="polite">100%</span><button class="btn" id="plus" aria-label="Aumentar zoom">+</button></div></div></main>
+<aside class="detail" id="detail"></aside></div>
+<div class="modalback" id="modal"><form class="modal" id="nodeForm"><h2 id="modalTitle">Novo elemento</h2><label class="field">Nome<input name="name" required maxlength="80" placeholder="Ex.: Vila Natal"></label><label class="field">Categoria<select name="category" id="categorySelect"></select></label><label class="field">Descrição<textarea name="description" placeholder="Qual a função deste elemento?"></textarea></label><label class="field">Informações e processos (uma linha por item)<textarea name="items" placeholder="Responsável: Felipe&#10;Horário: 17h às 23h&#10;Processo de agendamento"></textarea></label><div class="formbuttons"><button type="button" class="btn" id="cancelModal">Cancelar</button><button type="submit" class="btn primary">Salvar elemento</button></div></form></div>
+<div class="modalback" id="connectModal"><form class="modal" id="connectForm"><h2>Criar conexão</h2><label class="field">Origem<select name="from" id="connFrom"></select></label><label class="field">Destino<select name="to" id="connTo"></select></label><div class="formbuttons"><button type="button" class="btn" id="cancelConnect">Cancelar</button><button class="btn primary">Conectar elementos</button></div></form></div>
+<script>
+/* Diagnóstico não destrutivo: erros de inicialização nunca apagam dados locais. */
+(function(){
+  var reported=false;
+  function showFailure(){
+    if(reported)return;
+    reported=true;
+    function draw(){
+      if(document.getElementById('nexus-startup-error'))return;
+      var panel=document.createElement('div');
+      panel.id='nexus-startup-error';
+      panel.setAttribute('role','alert');
+      panel.style.cssText='position:fixed;z-index:2147483647;left:12px;right:12px;top:12px;max-width:560px;margin:auto;background:#251c25;color:#fff;border:1px solid #ef9a9a;border-radius:12px;padding:16px;font:14px/1.5 system-ui;box-shadow:0 12px 40px #0009';
+      var title=document.createElement('strong');title.textContent='NEXUS não conseguiu iniciar.';
+      var message=document.createElement('p');message.textContent='Seus dados locais não foram apagados. Não limpe os dados do navegador. Recarregue a página; se o erro continuar, registre o problema para análise.';
+      var button=document.createElement('button');button.textContent='Recarregar';button.style.cssText='padding:9px 16px;border:0;border-radius:8px;cursor:pointer';button.onclick=function(){location.reload()};
+      panel.append(title,message,button);document.body.appendChild(panel);
+    }
+    if(document.body)draw();else document.addEventListener('DOMContentLoaded',draw,{once:true});
+  }
+  window.addEventListener('error',function(event){if(event.target===window)showFailure()});
+  window.addEventListener('unhandledrejection',showFailure);
+})();
+</script>
+<script>
+(()=>{'use strict';
+const KEY='aureon-nexus-v1';
+const categories={central:{label:'Visão geral',color:'#83b6ff',icon:'✧'},salas:{label:'Salas',color:'#65a9ff',icon:'▣'},pontos:{label:'Captação',color:'#48dba4',icon:'⌖'},pessoas:{label:'Pessoas',color:'#ffc46c',icon:'♙'},processos:{label:'Processos',color:'#c9a1ff',icon:'↝'},resultados:{label:'Resultados',color:'#ff958e',icon:'▥'},estrategia:{label:'Estratégia',color:'#6fe0de',icon:'◇'},gestao:{label:'Gestão',color:'#f3b0dc',icon:'☷'},sistemas:{label:'Sistemas',color:'#aabaff',icon:'⌘'}};
+const initialNodes=[
+{id:'central',name:'OPERAÇÃO',category:'central',x:0,y:0,description:'Visão integrada da operação de captação, salas, pessoas, processos, resultados e estratégias.',items:['Gestão da operação de Campos do Jordão','Estrutura: captador → liner → closer','Selecione qualquer núcleo para explorar e editar as informações']},
+{id:'salas',name:'SALAS',category:'salas',x:-260,y:-185,description:'Salas comerciais e atendimento aos casais.',items:['Vila Natal • operação noturna: 17h às 22h30/23h','Registrar salas, responsáveis, capacidade e fluxo']},
+{id:'pontos',name:'CAPTAÇÃO',category:'pontos',x:265,y:-185,description:'Pontos de abordagem e entrada de casais.',items:['Park','Porta','Corredor','Guarda-chuva','Igreja','Baden']},
+{id:'pessoas',name:'PESSOAS',category:'pessoas',x:-330,y:90,description:'Equipe, responsáveis, hierarquia, atividades e desenvolvimento.',items:['Gestão: Rafael','Subliderança: Felipe','Controllers: Josyene e Paulo','Captadores → Liners → Closers','Adicionar perfis e vínculos individuais']},
+{id:'processos',name:'PROCESSOS',category:'processos',x:325,y:98,description:'Padrões da operação e fluxos de trabalho.',items:['Abordagem','Qualificação','Agendamento com antecedência de 24h','Tolerância de 30 minutos','Atendimento','Fechamento e acompanhamento']},
+{id:'resultados',name:'RESULTADOS',category:'resultados',x:-210,y:285,description:'Metas, indicadores de produtividade e análises.',items:['Meta de novembro: 708 casais','Eficiência-alvo: 25%','Acompanhar VGV, vendas, ticket e projeções','Conectar indicadores do RAIO X futuramente']},
+{id:'estrategia',name:'ESTRATÉGIA',category:'estrategia',x:105,y:315,description:'Decisões, oportunidades, ameaças e planos de ação.',items:['Reuniões com diretoria e CEO','Diagnóstico de pontos fortes e fracos','Prioridades e planos de melhoria','Registrar decisões e responsáveis']},
+{id:'gestao',name:'GESTÃO',category:'gestao',x:-485,y:-100,description:'Rotinas de acompanhamento de líderes e colaboradores.',items:['Folgas e escalas','Agendas e pautas','Ocorrências, faltas e atrasos','Contratações e integrações']},
+{id:'sistemas',name:'SISTEMAS',category:'sistemas',x:490,y:-90,description:'Aplicativos que compõem a operação.',items:['RAIO X • indicadores','LOGBOOK • ocorrências e escalas','PULSADOR • produtividade e financeiro','AUREON-BRINDES • cortesias e custos','Integrações ainda não conectadas']}
+];
+const poNodes=[
+{id:'po',name:'P.O',category:'gestao',parentId:'central',x:435,y:245,description:'Procedimentos operacionais e regras internas de conduta da captação.',items:['Regras comunicadas para vigorar a partir de sábado, 07/11/2026, no caso do uniforme.','Registre as ocorrências e valide a aplicação das medidas com a gestão e o jurídico.']},
+{id:'po-uniforme',name:'Uniforme',category:'gestao',parentId:'po',x:-210,y:-95,description:'Uso obrigatório de uniforme a partir de sábado, 07/11/2026.',items:['1ª ocorrência sem uniforme: acrescenta 1 casal à meta.','2ª ocorrência sem uniforme: acrescenta 2 casais à meta.','3ª ocorrência sem uniforme: acrescenta 3 casais à meta.','Conforme comunicado: se reclamar, vai para casa e acrescenta 5 casais à meta.']},
+{id:'po-faltas',name:'Faltar sem comunicar',category:'gestao',parentId:'po',x:220,y:-95,description:'Progressão indicada no comunicado para faltas sem comunicação.',items:['1ª falta: acrescenta 1 casal à meta.','2ª falta: acrescenta 2 casais à meta.','3ª falta: acrescenta 3 casais à meta.','4ª falta: acrescenta 4 casais à meta.','5ª falta: conforme comunicado, não trabalha até o final do mês.']},
+{id:'po-meeting',name:'Comer no meeting',category:'gestao',parentId:'po',x:0,y:210,description:'Regra comunicada para consumo de alimentos durante o meeting.',items:['Comer no meeting: acrescenta 1 casal à meta.']},
+{id:'po-informacoes-falsas',name:'Informações falsas do casal',category:'gestao',parentId:'po',x:230,y:210,description:'Quando o captador orientar o casal a mentir ou omitir informações durante a qualificação.',items:['1ª ocorrência comprovada: a meta de casais para o fixo dobra de 22 para 44 casais.','2ª ocorrência comprovada: conforme regra proposta, o captador deixa de receber o fixo.','Para recuperar o fixo: ficar no TOP 3 (1º, 2º ou 3º lugar) durante 2 meses consecutivos.','Apurar e documentar as ocorrências; validar penalidades e condições de remuneração com a gestão e o jurídico antes de aplicar.']},
+{id:'po-rota-carro',name:'Rota do carro',category:'gestao',parentId:'po',x:-250,y:320,description:'Perda da rota do carro destinada ao deslocamento para o trabalho.',items:['1ª rota perdida: acrescenta 1 casal à meta.','2ª rota perdida: acrescenta 2 casais à meta.','3ª rota perdida: acrescenta 3 casais à meta.','A partir da 4ª ocorrência: acrescenta à meta o mesmo número de casais da ocorrência (4ª = +4, 5ª = +5 e assim por diante).','Registrar a ocorrência e validar a aplicação com a gestão.']},
+{id:'po-horario-avisado',name:'Perdeu o horário e avisou',category:'gestao',parentId:'po',x:0,y:350,description:'O captador deve avisar com pelo menos 1 hora de antecedência quando não conseguir cumprir o horário. Aviso no prazo não aumenta a meta.',items:['Avisou com 1 hora ou mais de antecedência: nenhum casal acrescentado à meta.','Avisou com menos de 1 hora de antecedência e perdeu o horário: 1ª ocorrência = +1 casal.','2ª ocorrência de aviso fora do prazo: +2 casais.','3ª ocorrência de aviso fora do prazo: +3 casais.','4ª ocorrência e seguintes de aviso fora do prazo: acréscimo progressivo conforme o número de ocorrências (+4, +5 e assim por diante).','Registrar o horário do aviso e o horário previsto de trabalho; validar qualquer medida com a gestão.']},
+{id:'po-bebida-alcoolica',name:'Bebida alcoólica no trabalho',category:'gestao',parentId:'po',x:-200,y:470,description:'Consumo de bebida alcoólica durante o expediente ou atividades de trabalho.',items:['Conforme regra operacional proposta: consumir bebida alcoólica no trabalho acrescenta 5 casais à meta.','Registrar e apurar a ocorrência; validar a medida com a gestão e o jurídico antes da aplicação.']},
+{id:'po-conduta-ilicita',name:'Atos ilícitos e condutas proibidas',category:'gestao',parentId:'po',x:220,y:470,description:'Prática de atos ilícitos ou condutas expressamente proibidas no ambiente de trabalho.',items:['Condutas ilícitas ou proibidas são vedadas durante as atividades profissionais.','Conforme regra proposta: ocorrência comprovada pode resultar em distrato/encerramento contratual, após apuração e avaliação jurídica.','Preservar evidências, assegurar apuração adequada e formalizar qualquer decisão conforme o contrato e a legislação aplicável.']},
+{id:'po-consumo-dia',name:'Consumo do dia — organização e limpeza',category:'gestao',parentId:'po',x:0,y:600,description:'Orientações informativas para manter o ambiente de trabalho organizado e limpo durante e após refeições e lanches.',items:['Manter o ambiente de trabalho limpo, organizado e adequado para a equipe e os clientes.','Não deixar marmitas, restos de comida, copos ou embalagens espalhados nas salas e nos pontos de trabalho.','Após consumir alimentos ou bebidas, recolher os resíduos, descartá-los nos locais apropriados e deixar o espaço limpo.','Orientação informativa sobre o consumo do dia: sem acréscimo de casais e sem penalidade vinculada a este aviso.']},
+{id:'po-retorno-profissional',name:'Retorno de ex-profissionais',category:'gestao',parentId:'po',x:245,y:615,description:'Critérios internos propostos para avaliar a readmissão ou nova contratação de profissionais que saíram da empresa.',items:['Desligamento por conduta inadequada ou irregularidade: poderá ser avaliado para retorno somente após 12 meses, mediante validação expressa da gestão.','Saída por iniciativa do profissional, em boas condições e com as portas abertas: poderá ser avaliado para retorno após 6 meses.','Em eventual retorno, a proposta é não oferecer mínimo garantido nem antecipação ou adiantamento de comissão.','Nenhum retorno é automático: depende de nova análise da gestão, condições contratuais e validação jurídica.','Respeitar a legislação aplicável, os direitos remuneratórios obrigatórios e eventuais acordos vigentes.']},
+{id:'po-conselho-captacao',name:'Conselho de Captação — alterações de regras',category:'gestao',parentId:'po',x:-235,y:735,description:'Toda proposta de alteração, inclusão ou revogação de regras operacionais deve ser submetida à reunião e à votação do Conselho de Captação.',items:['Integrantes do Conselho de Captação: Raphael Bueno, Felipe Ribeiro, Josyene Freitas, Paulo Victor e Adriano Moreira.','Nenhuma regra operacional poderá ser alterada, incluída ou revogada por decisão individual; é necessária reunião do Conselho de Captação.','Cada integrante tem o direito de apresentar sua posição e registrar seu voto de acordo com sua decisão.','A decisão sobre a mudança depende do resultado da votação do Conselho, devendo ser registrada em ata com a proposta, participantes, votos e deliberação.','Somente após a deliberação registrada a mudança aprovada poderá ser formalizada e comunicada à equipe.','Quórum e critério de aprovação ainda devem ser definidos pelo próprio Conselho; alterações devem respeitar contratos e legislação aplicável.',"Reunião ordinária do Conselho de Captação: todo dia 1º de cada mês.","Todos os integrantes devem levar sua própria agenda ou pauta, com propostas, assuntos pendentes e pontos de decisão.","Na reunião, registrar as pautas apresentadas, os votos individuais, as deliberações e os responsáveis pelos encaminhamentos."]}
+];
+const initialEdges=['salas','pontos','pessoas','processos','resultados','estrategia','gestao','sistemas'].map(to=>({from:'central',to})).concat([{from:'pessoas',to:'gestao'},{from:'pontos',to:'processos'},{from:'processos',to:'resultados'},{from:'resultados',to:'estrategia'},{from:'resultados',to:'sistemas'}]);
+const deepCopy=x=>JSON.parse(JSON.stringify(x));
+function validData(d){if(!d||!Array.isArray(d.nodes)||!Array.isArray(d.edges)||d.nodes.length>500||d.edges.length>3000)return false;const ids=new Set();for(const n of d.nodes){if(!n||typeof n.id!=='string'||!n.id||ids.has(n.id)||typeof n.name!=='string'||n.name.length>200||!categories[n.category]||!Number.isFinite(n.x)||!Number.isFinite(n.y)||!Array.isArray(n.items)||n.items.length>300||n.items.some(v=>typeof v!=='string'||v.length>5000))return false;ids.add(n.id)}if(!ids.has('central'))return false;const root=d.nodes.find(n=>n.id==='central');if(root.parentId||root.category!=='central')return false;for(const n of d.nodes){if(n.id!=='central'&&n.parentId!=null&&(typeof n.parentId!=='string'||!n.parentId))return false;if(n.description!=null&&(typeof n.description!=='string'||n.description.length>20000))return false;if(Math.abs(n.x)>1000000||Math.abs(n.y)>1000000)return false}const lookup=new Map(d.nodes.map(n=>[n.id,n]));for(const n of d.nodes){if(n.parentId&&(!ids.has(n.parentId)||n.parentId===n.id))return false;const visited=new Set();let p=n;while(p&&p.parentId){if(visited.has(p.id))return false;visited.add(p.id);p=lookup.get(p.parentId);if(!p)return false}}return d.edges.every(e=>e&&typeof e.from==='string'&&typeof e.to==='string'&&ids.has(e.from)&&ids.has(e.to)&&e.from!==e.to)}
+let data;let storageProtected=false;try{const stored=localStorage.getItem(KEY);if(stored===null){data={nodes:deepCopy(initialNodes),edges:deepCopy(initialEdges)}}else{data=JSON.parse(stored);if(!validData(data))throw Error('invalid')}}catch{storageProtected=true;data={nodes:deepCopy(initialNodes),edges:deepCopy(initialEdges)}}
+for(const n of data.nodes){if(n.id!=='central'&&!n.parentId)n.parentId='central'}
+const MIGRATION='aureon-nexus-po-seeded-v1';let seeded=false;try{seeded=localStorage.getItem(MIGRATION)==='1'}catch{};if(!seeded&&!storageProtected){const before=deepCopy(data);for(const n of poNodes)if(!data.nodes.some(x=>x.id===n.id))data.nodes.push(deepCopy(n));for(const n of poNodes)if(data.nodes.some(x=>x.id===n.id)&&data.nodes.some(x=>x.id===n.parentId)&&!data.edges.some(e=>e.from===n.parentId&&e.to===n.id))data.edges.push({from:n.parentId,to:n.id});if(!validData(data)){data=before;storageProtected=true}else try{localStorage.setItem(KEY,JSON.stringify(data));try{localStorage.setItem(MIGRATION,'1')}catch{ /* Repetir a migração idempotente no próximo acesso. */ }}catch{data=before;storageProtected=true; /* Não permitir novas gravações se a migração não pôde ser persistida. */ }}
+// Migração incremental: acrescenta somente a nova regra, sem modificar os conteúdos existentes.
+const FIXO_RULE_MIGRATION='aureon-nexus-po-fixo-44-v1';
+if(!storageProtected){
+let installed=false;try{installed=localStorage.getItem(FIXO_RULE_MIGRATION)==='1'}catch{}
+if(!installed){
+ const rule=poNodes.find(n=>n.id==='po-informacoes-falsas');
+ if(rule&&data.nodes.some(n=>n.id==='po')&&!data.nodes.some(n=>n.id===rule.id)){
+   const prior=deepCopy(data);
+   data.nodes.push(deepCopy(rule));
+   if(!data.edges.some(e=>e.from==='po'&&e.to===rule.id))data.edges.push({from:'po',to:rule.id});
+   if(!validData(data)){data=prior;storageProtected=true}
+   else try{localStorage.setItem(KEY,JSON.stringify(data))}catch{data=prior;storageProtected=true}
+ }
+ if(!storageProtected){try{localStorage.setItem(FIXO_RULE_MIGRATION,'1')}catch{}}
+}
+}
+// Atualiza apenas o texto padrão anterior. Cadastros personalizados permanecem intactos.
+const FIXO_POLICY_MIGRATION='aureon-nexus-po-fixo-top3-v1';
+if(!storageProtected){
+ let completed=false;try{completed=localStorage.getItem(FIXO_POLICY_MIGRATION)==='1'}catch{}
+ if(!completed){
+  const existing=data.nodes.find(n=>n.id==='po-informacoes-falsas');
+  const previousDefault=['Conforme regra informada: a meta de casais para o fixo dobra de 22 para 44 casais.','Registrar e apurar a ocorrência antes da aplicação; validar a medida com a gestão e o jurídico.'];
+  if(existing&&JSON.stringify(existing.items)===JSON.stringify(previousDefault)){
+   const oldItems=existing.items.slice();
+   existing.items=poNodes.find(n=>n.id==='po-informacoes-falsas').items.slice();
+   if(!validData(data)){existing.items=oldItems;storageProtected=true}
+   else try{localStorage.setItem(KEY,JSON.stringify(data))}catch{existing.items=oldItems;storageProtected=true}
+  }
+  if(!storageProtected){try{localStorage.setItem(FIXO_POLICY_MIGRATION,'1')}catch{}}
+ }
+}
+// Migração aditiva das regras de transporte e horário: não altera nós já cadastrados.
+const TRANSPORT_RULES_MIGRATION='aureon-nexus-po-transporte-horario-v1';
+if(!storageProtected){
+ let completed=false;try{completed=localStorage.getItem(TRANSPORT_RULES_MIGRATION)==='1'}catch{}
+ if(!completed&&data.nodes.some(n=>n.id==='po')){
+  const previous=deepCopy(data);
+  for(const id of ['po-rota-carro','po-horario-avisado']){
+   const rule=poNodes.find(n=>n.id===id);
+   if(rule&&!data.nodes.some(n=>n.id===id))data.nodes.push(deepCopy(rule));
+   if(rule&&data.nodes.some(n=>n.id===id)&&!data.edges.some(e=>e.from==='po'&&e.to===id))data.edges.push({from:'po',to:id});
+  }
+  if(!validData(data)){data=previous;storageProtected=true}
+  else{
+   try{localStorage.setItem(KEY,JSON.stringify(data));try{localStorage.setItem(TRANSPORT_RULES_MIGRATION,'1')}catch{}}
+   catch{data=previous;storageProtected=true}
+  }
+ }
+}
+// Revisão idempotente da regra de antecedência: preserva edições personalizadas.
+const HORARIO_UMA_HORA_MIGRATION='aureon-nexus-po-aviso-1h-v1';
+if(!storageProtected){
+ let done=false;try{done=localStorage.getItem(HORARIO_UMA_HORA_MIGRATION)==='1'}catch{}
+ if(!done){
+  const existing=data.nodes.find(n=>n.id==='po-horario-avisado');
+  const template=poNodes.find(n=>n.id==='po-horario-avisado');
+  const previousItems=["1ª ocorrência com aviso: comparece ao trabalho com acréscimo de 1 casal na meta.","2ª ocorrência com aviso: comparece ao trabalho com acréscimo de 2 casais na meta.","3ª ocorrência com aviso: comparece ao trabalho com acréscimo de 3 casais na meta.","A partir da 4ª ocorrência: acréscimo progressivo de 1 casal a cada reincidência (4ª = +4, 5ª = +5 e assim por diante).","Registrar o aviso e a ocorrência; validar a aplicação com a gestão."];
+  const previousDesc="Quando o captador perde o horário, mas comunica o ocorrido, deve comparecer ao trabalho ciente do acréscimo de meta previsto.";
+  if(existing&&template){
+   const matchItems=JSON.stringify(existing.items)===JSON.stringify(previousItems);
+   const matchDesc=existing.description===previousDesc;
+   if(matchItems||matchDesc){
+    const priorItems=existing.items.slice(),priorDesc=existing.description;
+    if(matchItems)existing.items=template.items.slice();
+    if(matchDesc)existing.description=template.description;
+    if(!validData(data)){existing.items=priorItems;existing.description=priorDesc;storageProtected=true}
+    else try{localStorage.setItem(KEY,JSON.stringify(data))}
+    catch{existing.items=priorItems;existing.description=priorDesc;storageProtected=true}
+   }
+  }
+  if(!storageProtected){try{localStorage.setItem(HORARIO_UMA_HORA_MIGRATION,'1')}catch{}}
+ }
+}
+// Migração exclusivamente aditiva das novas regras de conduta; não altera regras editadas pelo usuário.
+const CONDUTA_PO_MIGRATION='aureon-nexus-po-conduta-v1';
+if(!storageProtected){
+ let complete=false;try{complete=localStorage.getItem(CONDUTA_PO_MIGRATION)==='1'}catch{}
+ if(!complete&&data.nodes.some(n=>n.id==='po')){
+  const before=deepCopy(data);
+  for(const id of ['po-bebida-alcoolica','po-conduta-ilicita']){
+   const rule=poNodes.find(n=>n.id===id);
+   if(rule&&!data.nodes.some(n=>n.id===id))data.nodes.push(deepCopy(rule));
+   if(rule&&data.nodes.some(n=>n.id===id)&&!data.edges.some(e=>e.from==='po'&&e.to===id))data.edges.push({from:'po',to:id});
+  }
+  if(!validData(data)){data=before;storageProtected=true}
+  else try{localStorage.setItem(KEY,JSON.stringify(data));try{localStorage.setItem(CONDUTA_PO_MIGRATION,'1')}catch{}}
+  catch{data=before;storageProtected=true}
+ }
+}
+// Migração aditiva de informação de limpeza: não altera nem recria nós excluídos após a migração.
+const CONSUMO_DIA_MIGRATION='aureon-nexus-po-consumo-dia-v1';
+if(!storageProtected){
+ let done=false;try{done=localStorage.getItem(CONSUMO_DIA_MIGRATION)==='1'}catch{}
+ if(!done&&data.nodes.some(n=>n.id==='po')){
+  const previous=deepCopy(data),id='po-consumo-dia';
+  const entry=poNodes.find(n=>n.id===id);
+  if(entry&&!data.nodes.some(n=>n.id===id))data.nodes.push(deepCopy(entry));
+  if(entry&&data.nodes.some(n=>n.id===id)&&!data.edges.some(e=>e.from==='po'&&e.to===id))data.edges.push({from:'po',to:id});
+  if(!validData(data)){data=previous;storageProtected=true}
+  else try{localStorage.setItem(KEY,JSON.stringify(data));try{localStorage.setItem(CONSUMO_DIA_MIGRATION,'1')}catch{}}
+  catch{data=previous;storageProtected=true}
+ }
+}
+// Migração aditiva e idempotente: novo procedimento de retorno de ex-profissionais.
+const RETORNO_PO_MIGRATION='aureon-nexus-po-retorno-profissional-v1';
+if(!storageProtected){
+ let done=false;try{done=localStorage.getItem(RETORNO_PO_MIGRATION)==='1'}catch{}
+ if(!done&&data.nodes.some(n=>n.id==='po')){
+  const previous=deepCopy(data),id='po-retorno-profissional',rule=poNodes.find(n=>n.id===id);
+  if(rule&&!data.nodes.some(n=>n.id===id))data.nodes.push(deepCopy(rule));
+  if(rule&&data.nodes.some(n=>n.id===id)&&!data.edges.some(e=>e.from==='po'&&e.to===id))data.edges.push({from:'po',to:id});
+  if(!validData(data)){data=previous;storageProtected=true}
+  else try{localStorage.setItem(KEY,JSON.stringify(data));try{localStorage.setItem(RETORNO_PO_MIGRATION,'1')}catch{}}
+  catch{data=previous;storageProtected=true}
+ }
+}
+// Migração aditiva: registra o Conselho sem alterar ou recriar regras existentes.
+const CONSELHO_PO_MIGRATION='aureon-nexus-po-conselho-v1';
+if(!storageProtected){
+ let done=false;try{done=localStorage.getItem(CONSELHO_PO_MIGRATION)==='1'}catch{}
+ if(!done&&data.nodes.some(n=>n.id==='po')){
+  const previous=deepCopy(data),id='po-conselho-captacao',rule=poNodes.find(n=>n.id===id);
+  if(rule&&!data.nodes.some(n=>n.id===id))data.nodes.push(deepCopy(rule));
+  if(rule&&data.nodes.some(n=>n.id===id)&&!data.edges.some(e=>e.from==='po'&&e.to===id))data.edges.push({from:'po',to:id});
+  if(!validData(data)){data=previous;storageProtected=true}
+  else try{localStorage.setItem(KEY,JSON.stringify(data));try{localStorage.setItem(CONSELHO_PO_MIGRATION,'1')}catch{}}
+  catch{data=previous;storageProtected=true}
+ }
+}
+// Atualização aditiva da agenda mensal; preserva regras anteriores e edições do conselho.
+const CONSELHO_AGENDA_MIGRATION='aureon-nexus-conselho-agenda-mensal-v1';
+if(!storageProtected){
+ let done=false;try{done=localStorage.getItem(CONSELHO_AGENDA_MIGRATION)==='1'}catch{}
+ if(!done){
+  const conselho=data.nodes.find(n=>n.id==='po-conselho-captacao');
+  if(conselho){
+   const before=deepCopy(data);
+   const items=["Reunião ordinária do Conselho de Captação: todo dia 1º de cada mês.","Todos os integrantes devem levar sua própria agenda ou pauta, com propostas, assuntos pendentes e pontos de decisão.","Na reunião, registrar as pautas apresentadas, os votos individuais, as deliberações e os responsáveis pelos encaminhamentos."];
+   for(const item of items)if(!conselho.items.includes(item))conselho.items.push(item);
+   if(!validData(data)){data=before;storageProtected=true}
+   else try{localStorage.setItem(KEY,JSON.stringify(data))}catch{data=before;storageProtected=true}
+  }
+  if(!storageProtected){try{localStorage.setItem(CONSELHO_AGENDA_MIGRATION,'1')}catch{}}
+ }
+}
+// Núcleo aditivo de inteligência: nunca substitui um cadastro local já existente.
+const ANALYTICS_NODE_MIGRATION='aureon-nexus-analytics-node-v1';
+if(!storageProtected){
+ let ready=false;try{ready=localStorage.getItem(ANALYTICS_NODE_MIGRATION)==='1'}catch{}
+ if(!ready){
+  const before=deepCopy(data),id='inteligencia';
+  if(!data.nodes.some(n=>n.id===id))data.nodes.push({id,name:'INTELIGÊNCIA',category:'resultados',parentId:'central',x:0,y:-385,description:'Dashboard histórico de produtividade, qualidade, vendas e custos por profissional.',items:['Histórico do TSExplorer: novembro de 2025 a novembro de 2026.','Dados de clientes não são exibidos nem armazenados no dashboard.']});
+  if(data.nodes.some(n=>n.id===id)&&!data.edges.some(e=>e.from==='central'&&e.to===id))data.edges.push({from:'central',to:id});
+  if(!validData(data)){data=before;storageProtected=true}
+  else try{localStorage.setItem(KEY,JSON.stringify(data));try{localStorage.setItem(ANALYTICS_NODE_MIGRATION,'1')}catch{}}catch{data=before;storageProtected=true}
+ }
+}
+let showInfo=false,current='central',selected='central',filter='all',query='',editing=null,scale=1,tx=0,ty=0,pointer=null,moved=false;
+const $=id=>document.getElementById(id),svgNS='http://www.w3.org/2000/svg';
+// Controle de concorrência: nunca substituir alterações de outra aba sem recarregar.
+let lastKnownStored=null;
+try{lastKnownStored=localStorage.getItem(KEY)}catch{storageProtected=true}
+window.addEventListener('storage',event=>{
+ if((event.key!==KEY&&event.key!==null)||event.storageArea!==localStorage||event.newValue===lastKnownStored)return;
+ storageProtected=true;
+ const info=$('mapInfo');if(info){info.textContent='⚠ Dados modificados em outra aba. Recarregue a página antes de editar para não perder alterações.';info.style.color='#ffcf9e'}
+ toast('Outra aba atualizou o NEXUS. Edição bloqueada até recarregar.');
+});
+// Detecta alterações em outra aba também após o navegador móvel suspender esta página.
+function verifyStoredVersion(){
+ if(storageProtected)return false;
+ try{
+  if(localStorage.getItem(KEY)===lastKnownStored)return true;
+  storageProtected=true;
+  const info=$('mapInfo');
+  if(info){info.textContent='⚠ Outra aba alterou os dados. Recarregue antes de editar.';info.style.color='#ffcf9e';info.style.borderColor='#a96d41'}
+  toast('Dados atualizados em outra aba. Edição bloqueada para preservar seus cadastros.');
+  return false;
+ }catch{
+  storageProtected=true;
+  toast('Armazenamento indisponível. Edição bloqueada para evitar perda de dados.');
+  return false;
+ }
+}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)verifyStoredVersion()});
+window.addEventListener('pageshow',event=>{if(event.persisted)verifyStoredVersion()});
+function persist(){if(!validData(data)){alert('Limite ou estrutura inválida: a alteração não foi salva. Exporte um backup e revise os dados antes de continuar.');return false}if(storageProtected){alert('Dados anteriores inválidos ou armazenamento indisponível. Salvamento bloqueado para proteger o conteúdo original. Faça um backup e verifique o armazenamento.');return false}try{
+ const latest=localStorage.getItem(KEY);
+ if(latest!==lastKnownStored){storageProtected=true;alert('O NEXUS foi alterado em outra aba. Esta edição não foi salva para preservar o cadastro mais recente. Recarregue a página.');return false}
+ const serialized=JSON.stringify(data);
+ localStorage.setItem(KEY,serialized);lastKnownStored=serialized;return true
+ }catch(e){storageProtected=true;alert('Não foi possível salvar neste navegador. Novas gravações foram bloqueadas para proteger os dados. Exporte um backup para evitar perda de dados.');return false}}
+function el(tag,attrs={},parent){const e=document.createElementNS(svgNS,tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);if(parent)parent.appendChild(e);return e}
+function textnode(parent,txt,attrs={}){const t=el('text',attrs,parent);t.textContent=txt;return t}
+function fit(){const rect=$('map').getBoundingClientRect();if(!rect.width||!rect.height)return;
+ const kids=childrenOf(current).filter(n=>(filter==='all'||n.category===filter)&&matches(n));
+ const coordinates=[{x:0,y:0},...kids];
+ const radius=83,minX=Math.min(...coordinates.map(n=>n.x))-radius,maxX=Math.max(...coordinates.map(n=>n.x))+radius;
+ const minY=Math.min(...coordinates.map(n=>n.y))-radius,maxY=Math.max(...coordinates.map(n=>n.y))+radius;
+ const isMobile=innerWidth<=760;
+ const bounds={left:isMobile?18:46,right:isMobile?18:46,top:isMobile?215:250,bottom:isMobile?104:105};
+ const availableW=Math.max(160,rect.width-bounds.left-bounds.right),availableH=Math.max(180,rect.height-bounds.top-bounds.bottom);
+ scale=Math.max(.3,Math.min(1.8,Math.min(availableW/Math.max(1,maxX-minX),availableH/Math.max(1,maxY-minY))));
+ const screenX=bounds.left+availableW/2,screenY=bounds.top+availableH/2;
+ tx=screenX-(minX+maxX)/2*scale;ty=screenY-(minY+maxY)/2*scale;transform()}
+function transform(){$('viewport').setAttribute('transform',`translate(${tx} ${ty}) scale(${scale})`);const label=$('zoomLevel');if(label)label.textContent=Math.round(scale*100)+'%'}
+function count(cat){return data.nodes.filter(n=>n.category===cat).length}
+function nodeById(id){return data.nodes.find(n=>n.id===id)}
+function childrenOf(id){return data.nodes.filter(n=>n.parentId===id)}
+function go(id){if(!nodeById(id))return;showInfo=childrenOf(id).length===0&&id!=='central';current=id;selected=id;filter='all';query='';$('search').value='';$('searchResults').hidden=true;render();fit();$('sidebar').classList.remove('open')}
+function crumbs(){const r=$('breadcrumbs');r.replaceChildren();const path=[];let n=nodeById(current),limit=0;while(n&&limit++<30){path.unshift(n);n=nodeById(n.parentId)}for(const [i,item] of path.entries()){if(i){const sep=document.createElement('span');sep.textContent='›';sep.style.color='#6584a9';r.appendChild(sep)}r.appendChild(btn(item.name,'crumb',()=>go(item.id)))}}
+function nav(){const holder=$('filters');holder.replaceChildren();const back=current!=='central'?btn('← Voltar ao nível anterior','navitem',()=>go(nodeById(current)?.parentId||'central')):null;if(back)holder.appendChild(back);
+holder.appendChild(btn('▤  Dashboard de resultados','navitem'+(current==='inteligencia'?' active':''),()=>go('inteligencia')));
+holder.appendChild(btn('◎  Mapa principal','navitem'+(current==='central'?' active':''),()=>go('central')));
+for(const [id,c] of Object.entries(categories)){if(id==='central')continue;const matching=childrenOf('central').filter(n=>n.category===id);if(!matching.length)continue;const b=btn(c.icon+'  '+c.label+'  ('+matching.length+')','navitem',()=>{if(matching.length===1)go(matching[0].id);else{go('central');filter=id;render();fit()}});holder.appendChild(b)}
+if(current!=='central'){const h=document.createElement('p');h.className='eyebrow';h.textContent='NESTE NÚCLEO';holder.appendChild(h);for(const n of childrenOf(current))holder.appendChild(btn('○  '+n.name,'navitem',()=>go(n.id)))}
+}
+function matches(n){return !query||normalizeSearch([n.name,n.description,...n.items].join(' ')).includes(normalizeSearch(query))}
+function render(){nav();crumbs();toolsPanel();const center=nodeById(current);if(!center){go('central');return}
+$('pageTitle').textContent=current==='central'?'Mapa da Operação':center.name;
+$('addNodeTop').textContent=current==='central'?'+ Novo núcleo':'+ Novo subnúcleo';
+const edges=$('edges'),nodes=$('nodes');edges.replaceChildren();nodes.replaceChildren();
+const kids=childrenOf(current).filter(n=>(filter==='all'||n.category===filter)&&matches(n));
+const display=[{...center,x:0,y:0},...kids];
+for(const n of kids){el('line',{x1:0,y1:0,x2:n.x,y2:n.y,stroke:categories[n.category].color,'stroke-width':1.7,'stroke-opacity':.5,'stroke-dasharray':'5 6','data-to':n.id},edges)}
+for(const n of display){const c=categories[n.category],central=n.id===current,r=central?73:61,g=el('g',{class:'node',transform:`translate(${n.x} ${n.y})`,tabindex:0,role:'button','aria-label':'Entrar em '+n.name,'data-id':n.id},nodes);
+el('circle',{class:'halo',r:r+18,fill:c.color},g);el('circle',{r,fill:central?'#193564':'#17263d',stroke:c.color,'stroke-width':central?2.5:1.8},g);el('circle',{cx:0,cy:-24,r:5,fill:c.color,opacity:.9},g);
+const short=n.name.length>18?n.name.slice(0,17)+'…':n.name;textnode(g,short,{y:2,'text-anchor':'middle','font-size':central?15:12,'font-weight':750,fill:'#f3f7ff'});textnode(g,central?'NÚCLEO ATUAL':c.label.toUpperCase(),{y:22,'text-anchor':'middle','font-size':8.5,'letter-spacing':1.2,fill:'#9db4d0'});
+g.addEventListener('pointerdown',ev=>{ev.stopPropagation();if(pointer)return;const touch=ev.pointerType==='touch'||ev.pointerType==='pen';pointer={type:touch?'node-pan':'node',id:n.id,pointerId:ev.pointerId,x:ev.clientX,y:ev.clientY,ox:touch?tx:n.x,oy:touch?ty:n.y,center:central};moved=false;$('map').setPointerCapture(ev.pointerId)});
+g.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();if(central){showInfo=!showInfo;render()}else go(n.id)}})}
+$('mapInfo').textContent=storageProtected?'⚠ Armazenamento protegido: dados locais não carregados. Não edite nem substitua este cadastro.':kids.length+' subnúcleos • '+data.nodes.length+' elementos cadastrados';const summary=$('nucleusSummary');summary.replaceChildren();if(kids.length>0&&current!=='central'){summary.hidden=false;const name=document.createElement('strong');name.textContent=center.name;const desc=document.createElement('small');desc.textContent=center.description||'Clique nas bolinhas para explorar este núcleo.';summary.append(name,desc)}else summary.hidden=true;
+const leaf=kids.length===0&&current!=='central';$('map').classList.toggle('is-leaf',leaf);$('guide').hidden=leaf||kids.length===0;detail();renderPO();renderRooms();renderAnalytics()}
+function renderPO(){
+const on=current==='po',board=$('poBoard'),map=$('map'),summary=$('nucleusSummary'),guide=$('guide'),bottom=document.querySelector('.bottom');
+document.querySelector('.workspace').classList.toggle('po-mode',on);
+board.hidden=!on;map.hidden=on;bottom.hidden=on;
+if(!on)return;
+summary.hidden=true;guide.hidden=true;$('centerPanel').hidden=true;
+const opened=board.querySelector('.po-card details[open]')?.closest('.po-card')?.dataset.ruleId||null;
+board.replaceChildren();
+const head=document.createElement('header');head.className='po-head';board.appendChild(head);
+const eyebrow=document.createElement('div');eyebrow.className='po-eyebrow';eyebrow.textContent='PROCEDIMENTOS OPERACIONAIS';head.appendChild(eyebrow);
+const title=document.createElement('h2');title.textContent='Regras da operação';head.appendChild(title);
+const subtitle=document.createElement('p');subtitle.textContent='Selecione uma caixinha para ver a regra completa. Clique novamente para recolher.';head.appendChild(subtitle);
+const cards=document.createElement('div');cards.className='po-cards';board.appendChild(cards);
+const rules=childrenOf('po');
+for(const [index,n] of rules.entries()){
+ const card=document.createElement('article');card.className='po-card';card.dataset.ruleId=n.id;cards.appendChild(card);
+ const details=document.createElement('details');card.appendChild(details);
+ const summaryButton=document.createElement('summary');details.appendChild(summaryButton);
+ const titleWrap=document.createElement('span');summaryButton.appendChild(titleWrap);
+ const num=document.createElement('span');num.className='po-card-index';num.textContent=n.id==='po-consumo-dia'?'INFORMATIVO':'REGRA '+String(index+1).padStart(2,'0');titleWrap.appendChild(num);
+ const name=document.createElement('span');name.className='po-card-title';name.textContent=n.name;titleWrap.appendChild(name);
+ const arrow=document.createElement('span');arrow.className='po-expand';arrow.textContent='▾';arrow.setAttribute('aria-hidden','true');summaryButton.appendChild(arrow);
+ const content=document.createElement('div');content.className='po-card-content';details.appendChild(content);
+ if(n.description){const description=document.createElement('p');description.className='po-card-desc';description.textContent=n.description;content.appendChild(description)}
+ for(const item of n.items){const row=document.createElement('div');row.className='po-rule';const mark=document.createElement('span');mark.className='po-rule-mark';mark.textContent='•';const label=document.createElement('span');label.textContent=item;row.append(mark,label);content.appendChild(row)}
+ if(!n.items.length){const empty=document.createElement('p');empty.className='hint';empty.textContent='Nenhuma regra cadastrada ainda.';content.appendChild(empty)}
+ const actions=document.createElement('div');actions.className='po-card-actions';content.appendChild(actions);
+ actions.appendChild(btn('✎ Editar','btn',()=>openNode(n)));
+ actions.appendChild(btn('Abrir detalhes','btn',()=>go(n.id)));
+ actions.appendChild(btn('+ Subregra','btn',()=>{go(n.id);openNode(null)}));
+ details.addEventListener('toggle',()=>{
+  card.classList.toggle('po-expanded',details.open);
+  if(details.open)for(const other of cards.querySelectorAll('.po-card details[open]'))if(other!==details)other.open=false;
+ });
+ if(n.id===opened){details.open=true;card.classList.add('po-expanded')}
+}
+if(!rules.length){const empty=document.createElement('div');empty.className='po-note';empty.textContent='Nenhuma regra cadastrada. Use “Novo filho” para criar.';board.appendChild(empty)}
+const note=document.createElement('p');note.className='po-note';note.textContent='As regras e eventuais penalidades devem observar a aprovação do Conselho de Captação e a validação contratual e jurídica aplicável.';board.appendChild(note);
+}
+function isRoomContext(){const node=nodeById(current);return current==='salas'||(node?.parentId==='salas'&&node.category==='salas')}
+function renderRooms(){
+ const board=$('roomsBoard'),on=isRoomContext();
+ document.querySelector('.workspace').classList.toggle('rooms-mode',on);board.hidden=!on;
+ if(!on)return;
+ $('map').hidden=true;document.querySelector('.bottom').hidden=true;$('nucleusSummary').hidden=true;$('guide').hidden=true;$('centerPanel').hidden=true;board.replaceChildren();
+ const header=document.createElement('header');header.className='rooms-head';board.appendChild(header);
+ const intro=document.createElement('div');header.appendChild(intro);
+ const title=document.createElement('h2');intro.appendChild(title);
+ const sub=document.createElement('p');intro.appendChild(sub);
+ const content=document.createElement('div');board.appendChild(content);
+  if(current==='salas'){
+  title.textContent='Salas e equipes';sub.textContent='Adicione salas e abra cada uma para cadastrar a equipe e suas funções.';
+  header.appendChild(btn('+ Adicionar sala','btn primary',()=>openNode(null,'salas')));
+  const rooms=childrenOf('salas');
+  if(!rooms.length){const p=document.createElement('p');p.className='room-empty';p.textContent='Nenhuma sala cadastrada. Clique em Adicionar sala (ex.: Dream House ou Romantic).';content.appendChild(p)}
+  const grid=document.createElement('div');grid.className='rooms-grid';content.appendChild(grid);
+  for(const n of rooms){const c=document.createElement('article');c.className='room-card';grid.appendChild(c);
+   const h=document.createElement('h3');h.textContent=n.name;c.appendChild(h);
+   if(n.description){const d=document.createElement('p');d.textContent=n.description;c.appendChild(d)}
+   const count=document.createElement('span');count.className='room-count';count.textContent=childrenOf(n.id).length+' profissional(is)';c.appendChild(count);
+   const a=document.createElement('div');a.className='room-actions';c.appendChild(a);
+   a.appendChild(btn('Abrir equipe','btn primary',()=>go(n.id)));a.appendChild(btn('Editar sala','btn',()=>openNode(n)));
+  }
+ }else{
+  const room=nodeById(current);title.textContent=room.name+' — equipe';sub.textContent='Cadastre os nomes e as funções da equipe desta sala.';
+  header.appendChild(btn('← Todas as salas','btn',()=>go('salas')));
+  const form=document.createElement('form');form.className='room-form';content.appendChild(form);
+  const nameLabel=document.createElement('label');nameLabel.textContent='Nome do profissional';form.appendChild(nameLabel);
+  const name=document.createElement('input');name.required=true;name.maxLength=80;name.placeholder='Nome completo';nameLabel.appendChild(name);
+  const roleLabel=document.createElement('label');roleLabel.textContent='Função';form.appendChild(roleLabel);
+  const role=document.createElement('select');roleLabel.appendChild(role);
+  for(const kind of ['Captador','Liner','Closer','FTB','Controller','Líder','Outro']){const option=document.createElement('option');option.value=kind;option.textContent=kind;role.appendChild(option)}
+  const add=btn('+ Adicionar pessoa','btn primary',()=>{});add.onclick=null;add.type='submit';form.appendChild(add);
+  form.onsubmit=e=>{e.preventDefault();if(storageProtected)return alert('Salvamento bloqueado para proteger seus dados.');
+   const full=name.value.trim();if(!full)return;
+   if(childrenOf(current).some(n=>n.name.toLocaleLowerCase('pt-BR')===full.toLocaleLowerCase('pt-BR')))return alert('Nome já cadastrado nesta sala.');
+   const previous=deepCopy(data),id='n'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),index=childrenOf(current).length;
+   data.nodes.push({id,name:full,category:'pessoas',parentId:current,description:'Função: '+role.value,items:[],x:Math.cos(index*2.4)*245,y:Math.sin(index*2.4)*165});
+   data.edges.push({from:current,to:id});
+   if(!persist()){data=previous;return}render();toast('Profissional cadastrado na sala.');
+  };
+  const members=childrenOf(current);
+  if(!members.length){const empty=document.createElement('p');empty.className='room-empty';empty.textContent='Equipe ainda vazia. Cadastre os profissionais no formulário acima.';content.appendChild(empty)}
+  const grid=document.createElement('div');grid.className='rooms-grid';content.appendChild(grid);
+  for(const n of members){const c=document.createElement('article');c.className='room-card';grid.appendChild(c);
+   const h=document.createElement('h3');h.textContent=n.name;c.appendChild(h);
+   const role=document.createElement('span');role.className='room-role';role.textContent=n.description||'Função não informada';c.appendChild(role);
+   const a=document.createElement('div');a.className='room-actions';c.appendChild(a);
+   a.appendChild(btn('Editar','btn',()=>openNode(n)));a.appendChild(btn('Detalhes','btn',()=>go(n.id)));a.appendChild(btn('Excluir','btn danger',()=>removeNode(n.id)));
+  }
+ }
+}
+
+const ANALYTICS_KEY='nexus-performance-aggregated-v1',ANALYTICS_COSTS_KEY='nexus-performance-costs-v1';
+const monthlySeed=[["2025-11",165,126,22,17557966,7,1333800],["2025-12",456,341,59,7262281,24,2555280.54],["2026-01",402,289,42,5719941,23,2738551.08],["2026-02",275,200,28,3236000,16,1880000],["2026-03",349,246,55,5890734,22,2186986.08],["2026-04",411,303,70,8794780,32,4504698],["2026-05",438,285,84,10239064,44,5884320],["2026-06",488,331,75,10362620,37,5370600],["2026-07",734,543,104,15162876,54,7636000],["2026-08",395,271,76,9482310,48,6774534.16],["2026-09",455,300,75,8961590,42,4523150],["2026-10",449,299,73,7382302,51,5154348],["2026-11",72,47,19,2336300,19,2336300]];
+let analyticsRows=[],analyticsCosts={};
+try{const saved=JSON.parse(localStorage.getItem(ANALYTICS_KEY)||'null');if(Array.isArray(saved)&&saved.length<10000&&saved.every(x=>Array.isArray(x)&&x.length===14&&typeof x[2]==='string'))analyticsRows=saved}catch{}
+try{const saved=JSON.parse(localStorage.getItem(ANALYTICS_COSTS_KEY)||'null');if(saved&&typeof saved==='object'&&!Array.isArray(saved))analyticsCosts=saved}catch{}
+let analyticsDefaultSource=false;
+let anMonth='all',anRole='captador',anQuery='',anSelected='';
+async function loadHistoricalAnalytics(){
+ if(analyticsRows.length)return;
+ try{const response=await fetch('./historico-operacao.json?v=20261107',{cache:'no-store'});
+ if(!response.ok)throw Error('Histórico indisponível');
+ const dataset=await response.json(),rows=dataset.rows;
+ if(!Array.isArray(rows)||rows.length>10000||!rows.every(r=>Array.isArray(r)&&r.length===14&&/^20\d{2}-\d{2}$/.test(r[0])&&['captador','liner','closer'].includes(r[1])&&typeof r[2]==='string'&&r[2].length<=200&&r.slice(3).every(v=>typeof v==='number'&&Number.isFinite(v)&&v>=0)))throw Error('Histórico inválido');
+ analyticsRows=rows;analyticsDefaultSource=true;if(current==='inteligencia')renderAnalytics();
+ }catch(err){if(current==='inteligencia')toast('Histórico individual não carregado: use Importar CSV.')}
+}
+
+const anBRL=v=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0}).format(v||0);
+const anNum=v=>new Intl.NumberFormat('pt-BR').format(v||0);
+const anPct=(a,b)=>b?(a/b*100).toFixed(1)+'%':'—';
+function anSave(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true}catch{alert('Não foi possível salvar os dados analíticos. Exporte um backup antes de continuar.');return false}}
+function anAggregate(rows){const map=new Map();
+ for(const r of rows){const key=r[1]+'|'+r[2],val=map.get(key)||{role:r[1],name:r[2],att:0,q:0,nq:0,nt:0,sold:0,active:0,cancel:0,mixed:0,vgv:0,net:0,gifts:0};
+ const idx=[3,4,5,6,7,8,9,10,11,12,13],fields=['att','q','nq','nt','sold','active','cancel','mixed','vgv','net','gifts'];
+ fields.forEach((f,i)=>val[f]+=Number(r[idx[i]])||0);map.set(key,val)}
+ return [...map.values()]}
+function anCsvLines(text){const rows=[],row=[];let cell='',quoted=false;
+ for(let i=0;i<text.length;i++){const ch=text[i];if(ch==='"'){if(quoted&&text[i+1]==='"'){cell+='"';i++}else quoted=!quoted}
+ else if(ch===';'&&!quoted){row.push(cell);cell=''}
+ else if((ch==='\n'||ch==='\r')&&!quoted){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(cell);if(row.some(x=>x.trim()))rows.push(row.slice());row.length=0;cell=''}
+ else cell+=ch}
+ if(cell||row.length){row.push(cell);rows.push(row.slice())}
+ return rows}
+function anMoney(v){
+ let raw=String(v??'').replace(/R\$/gi,'').replace(/\s/g,'').trim();
+ if(!raw)return 0;
+ if(!/^-?[0-9.,]+$/.test(raw))return 0;
+ const comma=raw.lastIndexOf(','),dot=raw.lastIndexOf('.');
+ if(comma>=0&&dot>=0)raw=comma>dot?raw.replace(/\./g,'').replace(',','.'):raw.replace(/,/g,'');
+ else if(comma>=0)raw=raw.replace(/\./g,'').replace(',','.');
+ else if(dot>=0&&raw.indexOf('.')!==dot)raw=raw.replace(/\./g,'');
+ else if(dot>=0&&/^\d{1,3}\.\d{3}$/.test(raw))raw=raw.replace('.','');
+ const n=Number(raw);return Number.isFinite(n)?n:0
+}
+function anGift(v){let result=0;const parts=String(v||'').matchAll(/VALOR:\s*(?:R\$\s*)?([\d.,]+)/gi);
+ for(const m of parts){const x=anMoney(m[1]);if(Number.isFinite(x)&&x>=0)result+=x}return result}
+function anImport(text){
+ const table=anCsvLines(text.replace(/^\uFEFF/,'')),headers=table.findIndex(row=>row[0]?.trim()==='Data de atendimento'&&row[1]?.trim()==='Promotor de marketing');
+ if(headers<0)throw Error('Colunas do TSExplorer não encontradas.');
+ const acc=new Map(),months=new Set(),required=30;let valid=0,skipped=0;
+ for(const r of table.slice(headers+1)){if(r.length<required||!/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/.test(r[0])){skipped++;continue;}
+ const [dd,mm,yy]=r[0].split('/').map(Number),date=new Date(yy,mm-1,dd);if(date.getDate()!==dd||date.getMonth()!==mm-1||date.getFullYear()!==yy){skipped++;continue;}
+ const month=yy+'-'+String(mm).padStart(2,'0'),gross=anMoney(r[14]);months.add(month);valid++;
+ const qual=r[27].trim().toUpperCase(),notour=r[15].trim().toUpperCase()==='NOTOUR',status=r[16].toUpperCase().split('#').map(x=>x.trim()).filter(Boolean);
+ const active=status.length>0&&status.every(x=>x==='ATIVO'),cancel=status.length>0&&status.every(x=>x==='CANCELADO'),mixed=status.length>0&&!active&&!cancel;
+ const gifts=anGift(r[29]);
+ for(const [role,index] of [['captador',1],['liner',2],['closer',3]]){const name=r[index].trim().replace(/\s+/g,' ').toUpperCase();if(!name)continue;
+ const key=month+'|'+role+'|'+name;
+ const a=acc.get(key)||[month,role,name,0,0,0,0,0,0,0,0,0,0,0];
+ a[3]++;a[4]+=qual==='Q';a[5]+=qual==='NQ';a[6]+=notour;a[7]+=gross>0;a[8]+=gross>0&&active;a[9]+=gross>0&&cancel;a[10]+=gross>0&&mixed;a[11]+=gross;a[12]+=active?gross:0;a[13]+=gifts;acc.set(key,a)
+ }}
+ if(valid===0)throw Error('Nenhum atendimento válido encontrado.');
+ const result=[...acc.values()];if(result.length>10000)throw Error('Arquivo excede o limite de registros agregados.');
+ return{result,valid,months:months.size,skipped}
+}
+function anDownload(filename,value){const blob=new Blob([JSON.stringify(value,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),2000)}
+function renderAnalytics(){
+ const board=$('analyticsBoard'),on=current==='inteligencia';document.querySelector('.workspace').classList.toggle('analytics-mode',on);board.hidden=!on;if(!on)return;
+ $('map').hidden=true;document.querySelector('.bottom').hidden=true;$('nucleusSummary').hidden=true;$('guide').hidden=true;$('centerPanel').hidden=true;board.replaceChildren();
+ const make=(tag,cls,parent,content)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(content!==undefined)el.textContent=content;parent.appendChild(el);return el};
+ const header=make('header','an-head',board),titles=make('div','',header);
+ make('h2','',titles,'Inteligência de resultados');
+ make('p','an-sub',titles,'Histórico TSExplorer • 01/11/2025 a 06/11/2026 • comparativos por profissional');
+ const fileInput=make('input','',header);fileInput.type='file';fileInput.accept='.csv,text/csv';fileInput.hidden=true;
+ const jsonInput=make('input','',header);jsonInput.type='file';jsonInput.accept='.json,application/json';jsonInput.hidden=true;
+ const importBtn=btn('Atualizar pelo CSV','btn primary',()=>fileInput.click());header.appendChild(importBtn);
+ header.appendChild(btn('Restaurar análise JSON','btn',()=>jsonInput.click()));
+ jsonInput.onchange=async()=>{const file=jsonInput.files?.[0];if(!file)return;
+ try{if(file.size>2*1024*1024)throw Error('JSON acima de 2 MB.');
+ const doc=JSON.parse(await file.text()),rows=doc.history||doc.rows;
+ if(!Array.isArray(rows)||rows.length>10000||!rows.every(r=>Array.isArray(r)&&r.length===14&&/^20\d{2}-\d{2}$/.test(r[0])&&['captador','liner','closer'].includes(r[1])&&typeof r[2]==='string'&&r.slice(3).every(v=>Number.isFinite(v)&&v>=0)))throw Error('Formato agregado inválido.');
+ if(!confirm('Importar '+rows.length+' registros agregados? Os núcleos e regras serão preservados.'))return;
+ if(!anSave(ANALYTICS_KEY,rows))return;
+ if(doc.costs&&typeof doc.costs==='object'&&!Array.isArray(doc.costs)){
+  const safe={};for(const [k,v] of Object.entries(doc.costs)){
+   if(k.length>250||!v||typeof v!=='object'||Array.isArray(v))continue;
+   const cleaned={};for(const [field,num] of Object.entries(v))if(['fixo','comissao','ajuda','spiff','outros'].includes(field)&&typeof num==='number'&&Number.isFinite(num)&&num>=0&&num<=99999999)cleaned[field]=num;
+   safe[k]=cleaned
+  }
+  if(Object.keys(safe).length&&confirm('Restaurar também os custos do backup? Isso substituirá somente os custos cadastrados na análise.')){
+   if(anSave(ANALYTICS_COSTS_KEY,safe))analyticsCosts=safe
+  }
+ }
+ analyticsRows=rows;analyticsDefaultSource=false;anSelected='';renderAnalytics();toast('Histórico agregado restaurado.');
+ }catch(e){alert('Arquivo não importado: '+e.message)}finally{jsonInput.value=''}};
+
+ fileInput.onchange=async()=>{const file=fileInput.files?.[0];if(!file)return;
+ try{if(file.size>10*1024*1024)throw Error('Limite de 10 MB.');
+ const bytes=await file.arrayBuffer();
+ const utf8=new TextDecoder('utf-8',{fatal:true}),legacy=new TextDecoder('windows-1252');
+ let decoded;try{decoded=utf8.decode(bytes)}catch{decoded=legacy.decode(bytes)}
+ const parsed=anImport(decoded);
+ if(!confirm('Foram identificados '+parsed.valid+' atendimentos'+(parsed.skipped?' e '+parsed.skipped+' linhas ignoradas':'')+'. Substituir somente a análise agregada anterior? Os núcleos, salas e regras do NEXUS serão preservados.'))return;
+ if(!anSave(ANALYTICS_KEY,parsed.result))return;analyticsRows=parsed.result;analyticsDefaultSource=false;anSelected='';renderAnalytics();toast('Histórico atualizado com '+parsed.valid+' atendimentos.')}
+ catch(e){alert('Importação não concluída: '+e.message)}finally{fileInput.value=''}};
+ const filters=make('div','an-filters',board);
+ const control=(label,items,value,fn)=>{const group=make('label','',filters,label),sel=make('select','',group);for(const [v,l] of items){const opt=make('option','',sel,l);opt.value=v}sel.value=value;sel.onchange=()=>fn(sel.value);return sel};
+ const months=[...new Set(analyticsRows.length?analyticsRows.map(r=>r[0]):monthlySeed.map(r=>r[0]))].sort().reverse();if(anMonth!=='all'&&!months.includes(anMonth))anMonth='all';
+ control('Mês',[['all','Todo o histórico'],...months.map(m=>[m,m])],anMonth,v=>{anMonth=v;renderAnalytics()});
+ control('Função',[['captador','Captadores'],['liner','Liners'],['closer','Closers']],anRole,v=>{anRole=v;anSelected='';renderAnalytics()});
+ const searchGroup=make('label','',filters,'Profissional'),search=make('input','',searchGroup);search.type='search';search.placeholder='Buscar nome';search.value=anQuery;search.oninput=()=>{anQuery=search.value;renderAnalytics();const next=board.querySelector('.an-filters input');next?.focus();next?.setSelectionRange(anQuery.length,anQuery.length)};
+ const currentMonthly=analyticsRows.length&&!analyticsDefaultSource?(()=>{
+  const byMonth=new Map();
+  for(const r of analyticsRows){if(r[1]!=='captador')continue;const a=byMonth.get(r[0])||[r[0],0,0,0,0,0];
+   a[1]+=Number(r[3])||0;a[2]+=Number(r[4])||0;a[3]+=Number(r[7])||0;a[4]+=Number(r[11])||0;a[5]+=Number(r[8])||0;a[6]=(a[6]||0)+(Number(r[12])||0);byMonth.set(r[0],a)}
+  return [...byMonth.values()].sort((a,b)=>a[0].localeCompare(b[0]));
+ })():monthlySeed;
+ const monthly=currentMonthly.filter(r=>anMonth==='all'||r[0]===anMonth);
+ const sum=(i)=>monthly.reduce((n,r)=>n+r[i],0),attendance=sum(1),gross=sum(4),sold=sum(3),qualified=sum(2);
+ const summary=make('div','an-kpis',board);
+ const knownActive=monthly.every(r=>r.length>6)?monthly.reduce((n,r)=>n+r[6],0):null;
+ for(const [label,value] of [['Atendimentos',anNum(attendance)],['VGV bruto (inclui cancelados)',anBRL(gross)],['VGV ativo confirmado',knownActive===null?'—':anBRL(knownActive)],['Atendimentos com venda',anNum(sold)],['Eficiência bruta',anPct(sold,attendance)]]){const c=make('div','an-kpi',summary);make('small','',c,label);make('strong','',c,value)}
+ const layout=make('div','an-layout',board),chartPanel=make('section','an-panel',layout);
+ make('h3','',chartPanel,'Evolução mensal do VGV bruto');
+ const chart=make('div','an-chart',chartPanel),max=Math.max(...monthly.map(r=>r[4]),1);
+ for(const r of monthly){const container=make('div','an-bar-wrap',chart),bar=make('div','an-bar',container);bar.style.height=Math.max(2,r[4]/max*140)+'px';bar.title=r[0]+' • '+anBRL(r[4]);make('small','',container,r[0].slice(5))}
+ make('p','an-caption',chartPanel,analyticsRows.length?'Base do arquivo agregado importado. Os papéis não devem ser somados entre si.':'Base histórica incorporada: 5.089 atendimentos. A soma por captador, liner e closer não deve ser feita em conjunto.');
+ const quality=make('section','an-panel',layout);make('h3','',quality,'Qualidade e contratos');
+ const active=sum(5);for(const [label,value] of [['Qualificados (Q)',anNum(qualified)+' • '+anPct(qualified,attendance)],['Vendas com status integralmente ativo',anNum(active)],['Ticket médio bruto',anBRL(sold?gross/sold:0)]]){const card=make('div','an-kpi',quality);make('small','',card,label);make('strong','',card,value)}
+ const ranking=make('section','an-panel an-panel-wide',board);make('h3','',ranking,'Ranking por profissional');
+ if(!analyticsRows.length){make('p','an-notice',ranking,'O resumo mensal já está disponível. Para habilitar o ranking individual, importe o CSV original do TSExplorer pelo botão acima. A importação extrai apenas os resultados agregados, sem guardar nomes de casais.');}
+ else{
+ const visible=anAggregate(analyticsRows.filter(r=>(anMonth==='all'||r[0]===anMonth)&&r[1]===anRole));
+ const ranked=visible.filter(r=>r.name.toLocaleLowerCase('pt-BR').includes(anQuery.toLocaleLowerCase('pt-BR'))).sort((a,b)=>b.net-a.net||b.vgv-a.vgv);
+ const tablebox=make('div','an-table-wrap',ranking),table=make('table','an-table',tablebox);
+ const tr=make('tr','',table);for(const name of ['Profissional','Casais','Q','Vendas','Eficiência','VGV bruto','VGV ativo confirmado','Brindes estimados'])make('th','',tr,name);
+ for(const r of ranked.slice(0,150)){const line=make('tr','',table);line.style.cursor='pointer';line.title='Clique para detalhar custos';line.onclick=()=>{anSelected=r.name;renderAnalytics()};
+ for(const v of [r.name,anNum(r.att),anNum(r.q),anNum(r.sold),anPct(r.sold,r.att),anBRL(r.vgv),anBRL(r.net),anBRL(r.gifts)])make('td','',line,v)}
+ make('p','an-caption',ranking,'Clique em um profissional para informar os custos. A coluna de VGV ativo confirmado exclui linhas sem status integralmente ATIVO.');
+ const alerts=ranked.filter(r=>r.att>=15&&(r.sold/r.att<.1||r.nq/r.att>.4||r.cancel/r.sold>.35)).slice(0,8);
+ if(alerts.length){
+  const alertBox=make('div','an-notice',ranking);alertBox.textContent='Pontos de atenção (critérios indicativos): '+alerts.map(r=>r.name+' — '+(r.sold/r.att<.1?'eficiência inferior a 10%':r.nq/r.att>.4?'NQ acima de 40%':'cancelamentos elevados')).join('; ')+'. Os casos exigem análise de contexto, não são avaliação disciplinar automática.';
+ }
+ const selected=visible.find(r=>r.name===anSelected);
+ if(selected){const panel=make('section','an-panel an-panel-wide',board);make('h3','',panel,'Custo do profissional — '+selected.name);
+ const key=anMonth+'|'+anRole+'|'+selected.name,prior=analyticsCosts[key]||{},fields=[['fixo','Fixo / mínimo garantido'],['comissao','Comissões'],['ajuda','Ajuda de custo'],['spiff','Bônus / SPIFF'],['outros','Outros custos']];
+ const inputGrid=make('div','an-cost-grid',panel),inputs={};
+ for(const [field,label] of fields){const wrap=make('label','',inputGrid,label),input=make('input','',wrap);input.type='number';input.min=0;input.max=99999999;input.step='.01';input.value=prior[field]??'';inputs[field]=input}
+ const sums=Object.values(prior).reduce((n,x)=>n+(Number(x)||0),0);
+ make('p','an-caption',panel,anMonth==='all'?'Período completo: preencha custos acumulados de todo o histórico, não o valor de um único mês.':'Mês selecionado: preencha os custos referentes somente a esse mês.');
+ const totalCost=selected.gifts+sums;
+ make('p','an-notice',panel,'Brindes estimados: '+anBRL(selected.gifts)+' | Outros custos informados: '+anBRL(sums)+' | Total: '+anBRL(totalCost)+' | Custo por casal: '+anBRL(selected.att?totalCost/selected.att:0)+' | Custo por atendimento com venda: '+(selected.sold?anBRL(totalCost/selected.sold):'—')+' | Custo / VGV ativo confirmado: '+anPct(totalCost,selected.net)+'. VGV não é lucro.');
+ const actions=make('div','an-actions',panel);
+ actions.appendChild(btn('Salvar custos','btn primary',()=>{const next={};for(const [k] of fields){const v=inputs[k].value;if(v&&!Number.isNaN(Number(v)))next[k]=Number(v)}const previous=analyticsCosts;analyticsCosts={...analyticsCosts,[key]:next};if(!anSave(ANALYTICS_COSTS_KEY,analyticsCosts)){analyticsCosts=previous;return}renderAnalytics();toast('Custos salvos neste navegador.')}));
+ }}
+ const footer=make('div','an-actions',board);
+ footer.appendChild(btn('Exportar backup da análise','btn',()=>anDownload('nexus-desempenho-backup.json',{version:1,history:analyticsRows,costs:analyticsCosts})));
+ if(analyticsDefaultSource)make('p','an-notice',board,'ALERTA DE CONCILIAÇÃO: em 05/11/2025 há um registro cancelado de R$ 14.677.365,69 sem promotor identificado. Ele integra o VGV bruto da base geral, mas não o ranking individual. Verifique também contratos com status misto ou de revisão.');
+ make('p','an-notice',board,'Fonte: TSExplorer — Controle de sala. Os custos fixos, comissões e bônus não constam na planilha, portanto precisam ser preenchidos. Valores de brindes são estimativas extraídas das descrições. Contratos com status misto não entram no VGV ativo confirmado. Dados agregados salvos apenas neste navegador.');
+}
+
+function toolsPanel(){const root=$('nucleusTools');root.replaceChildren();const n=nodeById(current);if(!n)return;if(current==='po'){root.appendChild(btn('☷ Ver regras','btn',()=>{$('poBoard').scrollTo({top:0,behavior:'smooth'});$('poBoard').focus({preventScroll:true})}))}else if(isRoomContext()){root.appendChild(btn('▦ Salas e equipes','btn',()=>{$('roomsBoard').scrollTo({top:0,behavior:'smooth'})}))}else if(current==='inteligencia'){root.appendChild(btn('▤ Dashboard','btn',()=>{$('analyticsBoard').scrollTo({top:0,behavior:'smooth'})}))}else root.appendChild(btn(showInfo?'✕ Fechar informações':'☷ Informações','btn',()=>{showInfo=!showInfo;render()}));root.appendChild(btn('✎ Editar núcleo','btn',()=>openNode(n)));if(current!=='central')root.appendChild(btn('← Voltar','btn',()=>go(n.parentId||'central')));if(current!=='central')root.appendChild(btn('Excluir núcleo','btn danger',()=>removeNode(current)));root.appendChild(btn('⊕ Novo filho','btn primary',()=>openNode(null)))}
+function detail(){const panel=$('centerPanel');panel.replaceChildren();const n=nodeById(current);if(!n)return;const children=childrenOf(current);
+const show=showInfo&&current!=='po';panel.hidden=!show;if(!show)return;
+const c=categories[n.category],header=document.createElement('div');header.className='category';header.style.color=c.color;header.textContent='● '+c.label.toUpperCase();panel.appendChild(header);
+const title=document.createElement('h2');title.textContent=n.name;panel.appendChild(title);
+const desc=document.createElement('p');desc.className='desc';desc.textContent=n.description||'Cadastre informações e procedimentos deste núcleo.';panel.appendChild(desc);
+const actions=document.createElement('div');actions.className='actions';panel.appendChild(actions);
+actions.appendChild(btn('✕ Fechar informações','btn',()=>{showInfo=false;render()}));if(current!=='central')actions.appendChild(btn('← Voltar','btn',()=>go(n.parentId||'central')));
+actions.appendChild(btn('✎ Editar conteúdo','btn primary',()=>openNode(n)));
+actions.appendChild(btn('+ Criar subnúcleo','btn',()=>openNode(null)));
+if(n.id!=='central')actions.appendChild(btn('Excluir','btn danger',()=>removeNode(n.id)));
+if(children.length){const childNote=document.createElement('p');childNote.className='notice';childNote.textContent=children.length+' subnúcleo(s) neste nível. Feche as informações para explorar as bolinhas.';panel.appendChild(childNote)}const heading=document.createElement('h3');heading.textContent='REGRAS E INFORMAÇÕES';panel.appendChild(heading);
+if(!n.items.length){const empty=document.createElement('p');empty.className='hint';empty.textContent='Nenhuma informação cadastrada ainda.';panel.appendChild(empty)}
+for(const item of n.items){const box=document.createElement('div');box.className='item';box.textContent=item;panel.appendChild(box)}
+const notice=document.createElement('p');notice.className='notice';notice.textContent='Informações salvas localmente neste navegador. As medidas disciplinares devem ser revisadas quanto à legislação aplicável antes de sua execução.';panel.appendChild(notice)}
+function removeNode(id){if(id==='central')return;const n=nodeById(id);if(!n||!confirm('Excluir "'+n.name+'" e todos os subnúcleos internos? Essa ação não poderá ser desfeita sem um backup.'))return;const gone=new Set([id]);let changed=true;while(changed){changed=false;for(const x of data.nodes)if(!gone.has(x.id)&&gone.has(x.parentId)){gone.add(x.id);changed=true}}
+const previous=deepCopy(data);data.nodes=data.nodes.filter(x=>!gone.has(x.id));data.edges=data.edges.filter(x=>!gone.has(x.from)&&!gone.has(x.to));if(!persist()){data=previous;return}go(n.parentId||'central')}
+function toast(message){const r=$('toast');r.textContent=message;r.hidden=false;setTimeout(()=>r.hidden=true,3200)}
+function btn(label,cls,fn){const b=document.createElement('button');b.className=cls;b.textContent=label;b.onclick=fn;return b}
+function openNode(n,categoryOverride){editing=n?.id||null;const category=categoryOverride||n?.category||(current==='salas'?'salas':nodeById(current)?.parentId==='salas'?'pessoas':'pessoas');$('modalTitle').textContent=n?'Editar elemento':category==='salas'?'Adicionar sala':isRoomContext()?'Adicionar profissional':'Novo elemento';const f=$('nodeForm');f.elements.name.value=n?.name||'';f.elements.category.value=n?.category==='central'?'pessoas':category;f.elements.category.disabled=!!n&&n.id==='central';f.elements.description.value=n?.description||'';f.elements.items.value=n?.items.join('\n')||'';$('modal').classList.add('show')}
+function options(){const sel=$('categorySelect');for(const [k,v] of Object.entries(categories)){if(k==='central')continue;const o=document.createElement('option');o.value=k;o.textContent=v.label;sel.appendChild(o)}}
+$('nodeForm').onsubmit=e=>{e.preventDefault();const f=e.currentTarget,fd=new FormData(f),name=String(fd.get('name')).trim();if(!name)return;const node=data.nodes.find(n=>n.id===editing);const previous=deepCopy(data);
+if(node){node.name=name;node.category=node.id==='central'?'central':String(fd.get('category'));node.description=String(fd.get('description')).trim();node.items=String(fd.get('items')).split('\n').map(s=>s.trim()).filter(Boolean)}
+else{const id='n'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);data.nodes.push({id,name,category:String(fd.get('category')),parentId:current,description:String(fd.get('description')).trim(),items:String(fd.get('items')).split('\n').map(s=>s.trim()).filter(Boolean),x:(Math.random()-.5)*440,y:(Math.random()-.5)*320});data.edges.push({from:current,to:id});selected=id}
+if(!persist()){data=previous;return}$('modal').classList.remove('show');if(!node)go(selected);else{showInfo=true;render()}toast('Elemento salvo neste navegador.')};
+function connectOpen(){const options=data.nodes.map(n=>'<option value="'+escapeHtml(n.id)+'">'+escapeHtml(n.name)+'</option>').join('');$('connFrom').innerHTML=options;$('connTo').innerHTML=options;$('connFrom').value=selected;$('connTo').value='central';$('connectModal').classList.add('show')}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('connectForm').onsubmit=e=>{e.preventDefault();const from=$('connFrom').value,to=$('connTo').value;if(from===to)return alert('Selecione dois elementos diferentes.');if(data.edges.some(x=>(x.from===from&&x.to===to)||(x.from===to&&x.to===from)))return alert('Essa conexão já existe.');data.edges.push({from,to});if(!persist()){data.edges.pop();return}$('connectModal').classList.remove('show');toast('Conexão registrada. Ela pode relacionar núcleos de níveis diferentes.');render()};
+function point(e){const r=$('map').getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
+$('map').addEventListener('pointerdown',e=>{if(pointer||e.target.closest('.node'))return;pointer={type:'pan',pointerId:e.pointerId,x:e.clientX,y:e.clientY,ox:tx,oy:ty};moved=false;$('map').setPointerCapture(e.pointerId)});
+$('map').addEventListener('pointermove',e=>{if(!pointer||e.pointerId!==pointer.pointerId)return;const dx=e.clientX-pointer.x,dy=e.clientY-pointer.y;if(Math.abs(dx)+Math.abs(dy)>7)moved=true;if(pointer.type==='pan'||pointer.type==='node-pan'){if(!moved)return;tx=pointer.ox+dx;ty=pointer.oy+dy;transform()}else{if(!moved)return;const n=data.nodes.find(n=>n.id===pointer.id);if(!n||pointer.center)return;n.x=pointer.ox+dx/scale;n.y=pointer.oy+dy/scale;const g=Array.from($('nodes').children).find(e=>e.getAttribute('data-id')===n.id);if(g)g.setAttribute('transform',`translate(${n.x} ${n.y})`);const line=Array.from($('edges').children).find(e=>e.getAttribute('data-to')===n.id);if(line){line.setAttribute('x2',n.x);line.setAttribute('y2',n.y)}}});
+function release(cancelled=false,event){if(!pointer||(event&&event.pointerId!==pointer.pointerId))return;const p=pointer;pointer=null;if(cancelled&&(p.type==='pan'||p.type==='node-pan')){tx=p.ox;ty=p.oy;transform();return}if(p.type==='node-pan'){if(!cancelled&&!moved){if(p.center){showInfo=!showInfo;render()}else go(p.id)}return}if(p.type==='node'){const n=nodeById(p.id);if(cancelled){if(n&&!p.center){n.x=p.ox;n.y=p.oy}render();return}if(moved){if(!persist()&&n){n.x=p.ox;n.y=p.oy}render()}else if(!p.center)go(p.id);else{showInfo=!showInfo;render()}}}
+$('map').addEventListener('pointerup',e=>release(false,e));$('map').addEventListener('pointercancel',e=>release(true,e));$('map').addEventListener('lostpointercapture',e=>release(true,e));
+function zoomAt(value,p){const next=Math.min(4,Math.max(.25,value));tx=p.x-(p.x-tx)*next/scale;ty=p.y-(p.y-ty)*next/scale;scale=next;transform()}
+$('map').addEventListener('wheel',e=>{e.preventDefault();const p=point(e);zoomAt(scale*Math.exp(-e.deltaY*.0015),p)},{passive:false});
+$('map').addEventListener('dblclick',e=>{e.preventDefault();zoomAt(scale*1.65,point(e))});
+function zoom(mul){const r=$('map').getBoundingClientRect();zoomAt(scale*mul,{x:r.width/2,y:r.height/2})}
+$('plus').onclick=()=>zoom(1.4);$('minus').onclick=()=>zoom(1/1.4);$('reset').onclick=fit;
+function normalizeSearch(s){return String(s??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('pt-BR')}
+function searchAll(value){const root=$('searchResults');root.replaceChildren();const q=normalizeSearch(value.trim());if(!q){root.hidden=true;return}const hits=data.nodes.filter(n=>normalizeSearch([n.name,n.description,...n.items].join(' ')).includes(q)).slice(0,20);root.hidden=false;if(!hits.length){const no=document.createElement('div');no.className='search-result';no.textContent='Nenhum resultado encontrado';root.appendChild(no)}for(const n of hits){const row=document.createElement('button');row.type='button';row.className='search-result';row.style.cssText='display:block;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #263c58;font:inherit;';row.dataset.nodeId=n.id;const strong=document.createElement('strong');strong.textContent=n.name;const small=document.createElement('small');const names=[];let p=n;let lim=0;while(p&&lim++<30){names.unshift(p.name);p=nodeById(p.parentId)}small.textContent=names.join(' › ');row.append(strong,small);row.onclick=()=>{go(n.id);root.hidden=true};row.onfocus=()=>{row.style.background='#203857'};row.onblur=()=>{row.style.background='transparent'};root.appendChild(row)}}
+$('search').oninput=e=>searchAll(e.target.value);$('search').onkeydown=e=>{const rows=[...$('searchResults').querySelectorAll('.search-result[data-node-id]')];if(e.key==='ArrowDown'&&rows.length){e.preventDefault();rows[0].focus()}if(e.key==='Enter'){const first=rows[0];if(first)first.click()}if(e.key==='Escape')$('searchResults').hidden=true};
+$('searchResults').addEventListener('keydown',e=>{const rows=[...$('searchResults').querySelectorAll('.search-result[data-node-id]')],i=rows.indexOf(document.activeElement);if(i<0)return;if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();rows[(i+(e.key==='ArrowDown'?1:-1)+rows.length)%rows.length].focus()}else if(e.key==='Escape'){e.preventDefault();$('searchResults').hidden=true;$('search').focus()}});
+window.addEventListener('keydown',e=>{if((e.key==='/'&&!e.ctrlKey&&!e.metaKey&&!e.altKey)&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)&&!document.activeElement?.isContentEditable){e.preventDefault();$('search').focus()}});
+
+$('addNodeMenu').onclick=$('addNodeTop').onclick=()=>openNode(null);$('connectMenu').onclick=connectOpen;
+$('cancelModal').onclick=()=>$('modal').classList.remove('show');$('cancelConnect').onclick=()=>$('connectModal').classList.remove('show');
+for(const id of ['modal','connectModal'])$(id).onclick=e=>{if(e.target===$(id))$(id).classList.remove('show')};
+$('exportMenu').onclick=()=>{if(storageProtected||!validData(data)){alert('Backup indisponível: os dados locais estão protegidos ou a estrutura atual é inválida. Preserve o cadastro original e revise os dados antes de exportar.');return}const blob=new Blob([JSON.stringify({...data,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='nexus-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
+$('importMenu').onclick=()=>{if(storageProtected){alert('Importação bloqueada: os dados locais não puderam ser lidos com segurança. Recupere o armazenamento antes de substituir qualquer cadastro.');return}$('importFile').click()};$('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>8*1024*1024)throw Error('O arquivo excede o limite de 8 MB.');const d=JSON.parse(await f.text());if(!validData(d))throw Error('Formato inválido');if(storageProtected)throw Error('Armazenamento protegido: importação bloqueada para preservar dados anteriores.');const incoming={nodes:d.nodes,edges:d.edges};
+ const originalIds=new Set(data.nodes.map(n=>n.id));
+ const incomingIds=new Set(incoming.nodes.map(n=>n.id));
+ const collisions=new Set(incoming.nodes.filter(n=>originalIds.has(n.id)&&n.id!=='central').map(n=>n.id));
+ // Um ID repetido pode representar outro núcleo no backup: nunca anexar seus filhos ao cadastro local homônimo.
+ const eligible=new Set(['central']);let changed=true;
+ while(changed){changed=false;for(const n of incoming.nodes){
+  if(originalIds.has(n.id)||eligible.has(n.id)||!eligible.has(n.parentId))continue;
+  eligible.add(n.id);changed=true;
+ }}
+ const additions=incoming.nodes.filter(n=>eligible.has(n.id)&&!originalIds.has(n.id));
+ const newIds=new Set(additions.map(n=>n.id));
+ const existingEdges=new Set(data.edges.map(e=>JSON.stringify([e.from,e.to])));
+ const newEdges=incoming.edges.filter(e=>{
+  if(!((newIds.has(e.from)||e.from==='central')&&(newIds.has(e.to)||e.to==='central')))return false;
+  const key=JSON.stringify([e.from,e.to]);if(existingEdges.has(key))return false;
+  existingEdges.add(key);return true
+ });
+ const omitted=incoming.nodes.filter(n=>!originalIds.has(n.id)&&!newIds.has(n.id)).length;
+ const merged={nodes:[...data.nodes,...additions],edges:[...data.edges,...newEdges]};
+ if(!validData(merged))throw Error('A mesclagem excede os limites ou contém vínculos inválidos. Nenhum dado foi alterado.');
+ if(!additions.length&&!newEdges.length){alert('O backup não contém novos núcleos ou vínculos. Os dados atuais foram preservados.');return}
+ if(!confirm('Mesclar '+additions.length+' novos núcleos e '+newEdges.length+' vínculos? '+(collisions.size?'Há '+collisions.size+' IDs repetidos; ':'')+(omitted?omitted+' subnúcleos dependentes desses IDs serão ignorados para evitar vínculos incorretos. ':'')+'Os '+originalIds.size+' núcleos locais serão preservados.'))return;
+ const previous=data;data=merged;if(!persist()){data=previous;throw Error('Não foi possível salvar a mesclagem. Os dados anteriores foram mantidos.')}
+ current='central';selected='central';showInfo=false;render();fit();toast('Backup mesclado sem substituir cadastros existentes.');
+ }catch(err){alert('Não foi possível importar: '+err.message)}finally{e.target.value=''}};
+$('menuBtn').onclick=()=>$('sidebar').classList.toggle('open');window.addEventListener('keydown',e=>{if(e.key==='Escape'){$('modal').classList.remove('show');$('connectModal').classList.remove('show');$('sidebar').classList.remove('open')}});
+options();render();fit();loadHistoricalAnalytics();if(storageProtected){$('mapInfo').textContent='⚠ Armazenamento protegido: dados locais não carregados. Não edite nem substitua este cadastro.';$('mapInfo').style.color='#ffcf9e';$('mapInfo').style.borderColor='#a96d41'}window.addEventListener('resize',()=>{render();fit()});
+})();
+</script><div id="toast" class="toast" hidden role="status"></div></body></html>
