@@ -10,10 +10,10 @@ button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.
 <main class="wrap">
 <header class="top"><div class="brandrow"><div class="mark" aria-hidden="true">◈</div><div><div class="brand">PORTAL<b>.</b></div><div class="subtitle">CENTRAL DE APLICATIVOS</div></div></div><div class="topactions"><button id="install" class="btn btn-primary" type="button">Instalar</button><button id="addTop" class="btn" type="button">+ App</button><button id="settings" class="iconbtn" aria-label="Configurações" title="Configurações" type="button">⚙</button></div></header>
 <section class="intro"><div><div class="eyebrow">SEU ECOSSISTEMA DIGITAL</div><h1>Tudo em um <em>só lugar.</em></h1><p>Escolha um aplicativo e acesse diretamente.</p></div><div class="pillstatus"><span class="dot"></span>Central pronta para uso</div></section>
-<section class="mainpanel" aria-label="Meus aplicativos"><div class="section-head"><div class="heading">Meus aplicativos <span id="count" class="count">8</span></div><div class="searchrow"><input id="search" class="search" type="search" placeholder="⌕ Buscar aplicativo..." aria-label="Buscar aplicativo" autocomplete="off"></div></div>
+<section class="mainpanel" aria-label="Meus aplicativos"><div class="section-head"><div class="heading">Meus aplicativos <span id="count" class="count">10</span></div><div class="searchrow"><input id="search" class="search" type="search" placeholder="⌕ Buscar aplicativo..." aria-label="Buscar aplicativo" autocomplete="off"></div></div>
 <div id="filters" class="chiprow" role="group" aria-label="Filtros de aplicativos"><button type="button" data-filter="all" class="chip active">Todos</button><button type="button" data-filter="favorite" class="chip">★ Favoritos</button><button type="button" data-filter="operation" class="chip">Operação</button><button type="button" data-filter="management" class="chip">Gestão</button></div>
 <div id="grid" class="grid"></div><div class="hint">Toque no ícone para abrir. Use ★ para destacar seus favoritos. Personalizações ficam salvas neste dispositivo.</div></section>
-<footer class="footer"><span>PORTAL · Ecossistema digital</span><span>Versão 3.2</span></footer></main>
+<footer class="footer"><span>PORTAL · Ecossistema digital</span><span>Versão 3.3</span></footer></main>
 <div id="backdrop" class="backdrop hidden"><form id="editor" class="dialog"><div class="modalhead"><h2 id="modalTitle">Adicionar aplicativo</h2><button id="close" type="button" class="iconbtn" aria-label="Fechar">×</button></div><p>Personalize o acesso aos seus sistemas.</p>
 <label class="field">Nome<input id="fieldName" maxlength="45" required placeholder="Nome do aplicativo"></label>
 <label class="field">Descrição<input id="fieldDescription" maxlength="100" placeholder="Para que serve"></label>
@@ -33,6 +33,8 @@ const defaults=[
 {id:'bmw',name:'ARENA X1 · BMW',description:'Campanha BMW X1, pontuação e ranking',url:'https://aureon-tech.github.io/ARENA-X1/',symbol:'X1',color:'#f7d680',category:'management'},
 {id:'repo-pulsador-',name:'PULSADOR',description:'Produtividade, VGV e financeiro da captação',url:'https://aureon-tech.github.io/PULSADOR-/',symbol:'PU',color:'#54beff',category:'operation'},
 {id:'repo-aureon-brindes',name:'AUREON BRINDES',description:'Controle e custos de brindes da operação',url:'https://aureon-tech.github.io/AUREON-BRINDES/',symbol:'AB',color:'#4ae3b6',category:'operation'},
+{id:'repo-board',name:'BOARD',description:'Quadro de gestão e acompanhamento da captação',url:'https://aureon-tech.github.io/BOARD/',symbol:'BO',color:'#4ae3b6',category:'management'},
+{id:'repo-modulo-de-treinamentos',name:'MÓDULO DE TREINAMENTOS',description:'Treinamentos e desenvolvimento da equipe de captação',url:'https://aureon-tech.github.io/modulo-de-treinamentos/',symbol:'MT',color:'#f9c16a',category:'operation'},
 {id:'control',name:'CONTROL',description:'Painel técnico e administrativo AUREON TECH',url:'https://raphaelbuenocaptacao-creator.github.io/AUREON-CONTROL/',symbol:'CT',color:'#60baff',category:'management'}
 ];
 const companyIds=new Set(defaults.map(a=>a.id));
