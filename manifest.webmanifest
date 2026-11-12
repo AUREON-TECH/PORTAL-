@@ -1,7 +1,7 @@
 {
-  "name": "PORTAL — Central de Aplicativos",
-  "short_name": "PORTAL",
-  "description": "Central de acesso aos aplicativos",
+  "name": "PORTAL X — Sua operação conectada",
+  "short_name": "PORTAL X",
+  "description": "Sua operação conectada. by AUREON.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
