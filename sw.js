@@ -1,5 +1,5 @@
-const CACHE='portal-v17';
-const ASSETS=['./','./index.html','./manifest.webmanifest','./icon.svg'];
+const CACHE='portal-v18';
+const ASSETS=['./','./index.html','./manifest.webmanifest','./icon.svg?v=4'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
 });
