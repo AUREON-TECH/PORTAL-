@@ -9,6 +9,8 @@ button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.
 .mark{display:block;flex-shrink:0;object-fit:contain;border:0;background:none;box-shadow:0 6px 22px #008bdf20}.brand{letter-spacing:.055em}.brand b{color:#16cef0}.subtitle{color:#b4c6dd;letter-spacing:.12em}.brandrow{min-width:0}@media(max-width:350px){.brandrow{gap:6px}.brand{font-size:14px}.topactions{gap:4px}.topactions .btn{padding:9px 7px}.mark{width:34px;height:34px}}
 [hidden]{display:none!important}@media(max-width:600px){.top{flex-wrap:wrap}.topactions{margin-left:auto}.topactions .btn{padding:8px}.brand{font-size:15px}}
 body:not(.portal-owner) .fav,body:not(.portal-owner) .edit,body:not(.portal-owner) [data-filter="favorite"]{display:none!important}
+
+body:not(.portal-owner) .app .edit{display:none!important}
 </style></head><body>
 <main class="wrap">
 <header class="top"><div class="brandrow"><img class="mark" src="./icon.svg?v=4" width="48" height="48" alt="" aria-hidden="true"><div><div class="brand">PORTAL <b>X</b></div><div class="subtitle">by AUREON</div></div></div><div class="topactions"><button id="manageAccess" class="btn" type="button" hidden>Acessos</button><button id="account" class="btn" type="button">Entrar</button><button id="install" class="btn btn-primary" type="button">Instalar</button><button hidden id="addTop" class="btn" type="button">+ App</button><button hidden id="settings" class="iconbtn" aria-label="Configurações" title="Configurações" type="button">⚙</button></div></header>
@@ -55,7 +57,9 @@ async function catalog(session){const request=++catalogRequest;
  if(session)sessionStorage.setItem(SESSION_KEY,JSON.stringify(session));else sessionStorage.removeItem(SESSION_KEY);
  companyIds.clear();rows.forEach(a=>companyIds.add(a.id));defaults.splice(0,defaults.length,...rows);
  let saved=[];if(session&&portalUserId){try{const prefs=await api('/rest/v1/portal_user_preferences?select=apps&user_id=eq.'+encodeURIComponent(portalUserId),{},token);saved=Array.isArray(prefs?.[0]?.apps)?prefs[0].apps:[]}catch{}}
- apps=rows.map(a=>({...normalized(a),favorite:!!saved.find(x=>x.id===a.id)?.favorite}));
+ apps=rows.map(a=>{const custom=isOwner?saved.find(x=>x.id===a.id):null;return {...normalized(custom?{...a,...custom,id:a.id}:a),favorite:!!saved.find(x=>x.id===a.id)?.favorite,public_access:a.public_access}});
+ if(isOwner){for(const custom of saved){if(!rows.some(a=>a.id===custom.id)&&custom.id&&valid(custom.url))apps.push(normalized(custom));}}
+ if(!saved.length)apps.sort((a,b)=>Number(!!b.public_access)-Number(!!a.public_access));
  if(saved.length){const positions=new Map(saved.map((a,i)=>[a.id,i]));apps.sort((a,b)=>(positions.get(a.id)??999)-(positions.get(b.id)??999));}render();
 }
 el('account').onclick=async()=>{if(portalSession){const token=portalSession?.access_token;catalogRequest++;portalOwner=false;portalSession=null;portalUserId=null;sessionStorage.removeItem(SESSION_KEY);localStorage.setItem('portal-x-logout',String(Date.now()));apps=[];filter='all';el('search').value='';render();closeSettings();closeEditor();el('accessBackdrop').classList.add('hidden');el('accessMembers').innerHTML='';membersForAccess=[];grantsForAccess=[];api('/auth/v1/logout',{method:'POST'},token).catch(()=>{});return;}el('loginBackdrop').classList.remove('hidden');el('loginEmail').focus();};
@@ -70,7 +74,7 @@ window.addEventListener('pageshow',e=>{if(e.persisted)restorePortal()});
 
 let apps=load(),filter='all',editing=null,installPrompt=null,toastTimer;
 function persist(next){if(!portalSession||!portalUserId){notify('Entre na sua conta para personalizar.');return false}
- apps=next;const safe=next.map(({id,favorite})=>({id,favorite}));
+ apps=next;const safe=portalOwner?next:next.map(({id,favorite})=>({id,favorite}));
  api('/rest/v1/portal_user_preferences?on_conflict=user_id',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify({user_id:portalUserId,apps:safe,updated_at:new Date().toISOString()})},portalSession.access_token).catch(()=>notify('Não foi possível sincronizar suas preferências.'));
  return true;}
 
